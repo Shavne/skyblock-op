@@ -1,883 +1,1043 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth dark">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SkyBlock OP - Mod Profesional para Fabric (1.21.1 / 1.21.11 / 26.3)</title>
-    
-    <!-- Favicon optimizado -->
+    <title>Skyblockop — Next-Gen Skyblock Expansion Mod for Minecraft</title>
+    <!-- Favicon & Social Banner Preview -->
     <link rel="icon" type="image/png" href="./favicon.png">
-
-    <!-- Vista previa para Discord, WhatsApp y Redes Sociales (Open Graph) -->
     <meta property="og:site_name" content="SkyBlock OP">
-    <meta property="og:title" content="SkyBlock OP - Mod Profesional para Fabric">
-    <meta property="og:description" content="Mejora tu experiencia en SkyBlock con herramientas avanzadas, calculadora y utilidades optimizadas para Minecraft Fabric.">
+    <meta property="og:title" content="SkyBlock OP — Next-Gen Skyblock Expansion Mod">
+    <meta property="og:description" content="Upgrade your Skyblock experience with automated ore generators, custom mobs, 3x3 pickaxes, and OP gear.">
     <meta property="og:url" content="https://skyblockop.site/">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://skyblockop.site/banner.png">
-    
-    <!-- Color de la barra lateral en Discord (Verde Esmeralda) -->
-    <meta name="theme-color" content="#fbbf24">
-
-    <!-- Necesario para que Discord muestre la imagen en tamaño grande -->
+    <meta name="theme-color" content="#38BDF8">
     <meta name="twitter:card" content="summary_large_image">
-
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
                     colors: {
-                        brand: {
-                            gold: '#10B981', /* Actualizado a Verde Esmeralda */
-                            glow: '#059669',
-                            cyan: '#06b6d4',
-                            purple: '#a855f7',
-                        },
-                        discord: '#5865F2',
-                        darkBg: '#090d16',
-                        darkCard: '#111827',
-                        darkBorder: '#1f2937'
-                    },
-                    boxShadow: {
-                        'neon-gold': '0 0 25px -5px rgba(16, 185, 129, 0.5), 0 0 10px -5px rgba(5, 150, 105, 0.3)',
-                        'neon-cyan': '0 0 25px -5px rgba(6, 182, 212, 0.5)',
-                        'neon-discord': '0 0 25px -5px rgba(88, 101, 242, 0.5)',
-                        'glow-lg': '0 0 40px rgba(16, 185, 129, 0.25)',
-                    },
-                    keyframes: {
-                        float: {
-                            '0%, 100%': { transform: 'translateY(0px)' },
-                            '50%': { transform: 'translateY(-10px)' },
-                        },
-                        pulseGlow: {
-                            '0%, 100%': { opacity: '0.6' },
-                            '50%': { opacity: '1' },
+                        celeste: {
+                            50: '#F2FAFF',
+                            100: '#DFF4FF',
+                            200: '#B8E8FF',
+                            300: '#7DD3FC',
+                            400: '#38BDF8',
+                            500: '#0EA5E9',
+                            600: '#0284C7',
+                            700: '#0369A1',
+                            800: '#075985',
+                            900: '#0F2942',
                         }
                     },
-                    animation: {
-                        float: 'float 4s ease-in-out infinite',
-                        'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
+                    boxShadow: {
+                        'sky-card': '0 14px 36px -10px rgba(3, 105, 161, 0.14), 0 4px 12px -4px rgba(14, 165, 233, 0.08)',
+                        'sky-glow': '0 20px 45px -12px rgba(2, 132, 199, 0.28)',
+                        'night-card': '0 16px 40px -10px rgba(2, 6, 23, 0.65), 0 0 20px -4px rgba(56, 189, 248, 0.14)',
                     }
                 }
             }
         }
     </script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+
     <style>
+        /* Daytime Minecraft Sky-Blue ("Celeste") Atmospheric Canvas */
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #090d16;
-            color: #f3f4f6;
-            overflow-x: hidden;
+            background: linear-gradient(180deg, #8FD8FF 0%, #C4ECFF 30%, #EDF9FF 70%, #D4F1FF 100%);
+            min-height: 100vh;
+            transition: background 0.5s ease, color 0.35s ease;
         }
-        .font-orbitron {
-            font-family: 'Orbitron', sans-serif;
+
+        /* Starry Minecraft Night Sky Atmospheric Canvas */
+        html.dark body {
+            background: linear-gradient(180deg, #070B19 0%, #0F1A36 38%, #17274D 75%, #0B132B 100%);
         }
-        .grid-bg {
-            background-image: radial-gradient(rgba(16, 185, 129, 0.12) 1px, transparent 0);
-            background-size: 32px 32px;
+
+        /* Voxel Cloud Drifting, Floating Island & Star Twinkle Animations */
+        @keyframes driftCloudSlow {
+            0%, 100% { transform: translateX(0px) translateY(0px); }
+            50% { transform: translateX(18px) translateY(-6px); }
         }
-        .glass-panel {
-            background: rgba(17, 24, 39, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        @keyframes driftCloudReverse {
+            0%, 100% { transform: translateX(0px) translateY(0px); }
+            50% { transform: translateX(-16px) translateY(5px); }
         }
-        .glass-card {
-            background: rgba(17, 24, 39, 0.65);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        @keyframes floatIsland {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(1.5deg); }
         }
-        .glass-card:hover {
-            border-color: rgba(16, 185, 129, 0.4);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.25);
+        @keyframes twinkleStar {
+            0%, 100% { opacity: 0.25; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.15); }
         }
+
+        .cloud-drift-1 { animation: driftCloudSlow 9s ease-in-out infinite; }
+        .cloud-drift-2 { animation: driftCloudReverse 11s ease-in-out infinite; }
+        .island-float { animation: floatIsland 4.5s ease-in-out infinite; }
+        .star-twinkle-1 { animation: twinkleStar 3.2s ease-in-out infinite; }
+        .star-twinkle-2 { animation: twinkleStar 4.5s ease-in-out infinite 1.1s; }
+        .star-twinkle-3 { animation: twinkleStar 3.8s ease-in-out infinite 2s; }
+
+        /* Bento Card Glass & Crisp Border (Day & Night Adaptive) */
+        .bento-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1.5px solid rgba(255, 255, 255, 0.95);
+            transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+        html.dark .bento-card {
+            background: rgba(15, 26, 54, 0.78);
+            border: 1.5px solid rgba(56, 189, 248, 0.22);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #DFF4FF; }
+        html.dark ::-webkit-scrollbar-track { background: #070B19; }
+        ::-webkit-scrollbar-thumb { background: #38BDF8; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0284C7; }
     </style>
 </head>
-<body class="selection:bg-brand-gold selection:text-black">
+<body class="text-celeste-900 dark:text-slate-100 antialiased selection:bg-celeste-500 selection:text-white relative overflow-x-hidden">
 
-    <!-- Contenedor para Notificaciones Emergentes -->
-    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
-
-    <!-- Navegación Superior -->
-    <header class="fixed top-0 left-0 w-full z-40 glass-panel border-b border-gray-800/80">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            
-            <!-- LOGO -->
-            <a href="#inicio" class="flex items-center gap-3 group">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-gold via-amber-500 to-yellow-600 flex items-center justify-center text-slate-950 font-bold shadow-neon-gold group-hover:scale-105 transition-transform">
-                    <i class="fa-solid fa-gem text-xl text-slate-950"></i>
-                </div>
-                <div class="flex flex-col">
-                    <span class="font-orbitron tracking-wider text-lg font-black text-white group-hover:text-brand-gold transition-colors">
-                        SKYBLOCK<span class="text-brand-gold"> OP</span>
-                    </span>
-                    <span class="text-[10px] text-brand-cyan tracking-widest uppercase font-bold flex items-center gap-1">
-                        <i class="fa-solid fa-cube text-[9px]"></i> Fabric Exclusivo
-                    </span>
-                </div>
-            </a>
-
-            <!-- Enlaces de Navegación (Sin Galería) -->
-            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
-                <a href="#inicio" data-i18n="nav.home" class="hover:text-brand-gold transition-colors">Inicio</a>
-                <a href="#caracteristicas" data-i18n="nav.features" class="hover:text-brand-gold transition-colors">Características</a>
-                <a href="#descargar" data-i18n="nav.download" class="hover:text-brand-gold transition-colors">Descargas</a>
-                <a href="#comunidad" data-i18n="nav.community" class="hover:text-brand-gold transition-colors">Comunidad</a>
-            </nav>
-
-            <!-- Selector de Idioma y Botones de Acción -->
-            <div class="hidden sm:flex items-center gap-4">
-                
-                <!-- Desplegable de Idioma -->
-                <div class="relative inline-block text-left">
-                    <button id="lang-btn" onclick="toggleLangDropdown()" class="flex items-center gap-2 px-3 py-2 rounded-xl glass-panel border border-gray-700 hover:border-brand-gold text-white text-xs font-semibold transition-all">
-                        <i class="fa-solid fa-globe text-brand-gold"></i>
-                        <span id="current-lang-label">Español (ES)</span>
-                        <i class="fa-solid fa-chevron-down text-[10px]"></i>
-                    </button>
-                    <div id="lang-dropdown" class="hidden absolute right-0 mt-2 w-40 rounded-xl bg-darkCard border border-gray-700 shadow-2xl py-2 z-50">
-                        <button onclick="setLanguage('es')" class="w-full text-left px-4 py-2 text-xs text-gray-200 hover:bg-brand-gold/10 hover:text-brand-gold flex items-center justify-between">
-                            <span>Español</span> <span class="text-[10px] text-gray-400">ES</span>
-                        </button>
-                        <button onclick="setLanguage('en')" class="w-full text-left px-4 py-2 text-xs text-gray-200 hover:bg-brand-gold/10 hover:text-brand-gold flex items-center justify-between">
-                            <span>English</span> <span class="text-[10px] text-gray-400">EN</span>
-                        </button>
-                        <button onclick="setLanguage('pt')" class="w-full text-left px-4 py-2 text-xs text-gray-200 hover:bg-brand-gold/10 hover:text-brand-gold flex items-center justify-between">
-                            <span>Português</span> <span class="text-[10px] text-gray-400">PT</span>
-                        </button>
-                        <button onclick="setLanguage('zh')" class="w-full text-left px-4 py-2 text-xs text-gray-200 hover:bg-brand-gold/10 hover:text-brand-gold flex items-center justify-between">
-                            <span>中文 (Simplified)</span> <span class="text-[10px] text-gray-400">ZH</span>
-                        </button>
-                    </div>
-                </div>
-
-                <a href="https://discord.gg/6AxkFar" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-discord/10 border border-discord/30 text-discord hover:bg-discord hover:text-white transition-all duration-300 font-semibold text-sm shadow-sm hover:shadow-neon-discord">
-                    <i class="fa-brands fa-discord text-lg"></i>
-                    <span>Discord</span>
-                </a>
-                <a href="#descargar" class="flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-brand-gold via-amber-500 to-yellow-600 text-slate-950 font-bold hover:brightness-110 transition-all shadow-neon-gold text-sm">
-                    <i class="fa-solid fa-download"></i>
-                    <span data-i18n="hero.downloadBtn">Obtener Mod</span>
-                </a>
+    <!-- ==================== DECORATIVE SKY CLOUDS (DAY) & PIXEL STARS/MOON (NIGHT) ==================== -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
+        <!-- Daytime Voxel Clouds -->
+        <div class="dark:hidden transition-opacity duration-500">
+            <div class="cloud-drift-1 absolute top-20 -left-10 opacity-75">
+                <div class="w-44 h-12 bg-white/80 rounded-2xl shadow-sm"></div>
+                <div class="w-28 h-10 bg-white/90 rounded-2xl -mt-14 ml-8"></div>
             </div>
-
-            <!-- Botón Menú Móvil -->
-            <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white focus:outline-none p-2" aria-label="Abrir Menú">
-                <i class="fa-solid fa-bars text-2xl"></i>
-            </button>
+            <div class="cloud-drift-2 absolute top-32 -right-8 opacity-80">
+                <div class="w-52 h-14 bg-white/80 rounded-2xl shadow-sm"></div>
+                <div class="w-32 h-10 bg-white/90 rounded-2xl -mt-16 ml-10"></div>
+            </div>
+            <div class="absolute top-1/3 left-1/4 w-96 h-96 bg-white/40 rounded-full blur-3xl"></div>
         </div>
 
-        <!-- Menú Desplegable Móvil -->
-        <div id="mobile-menu" class="hidden md:hidden bg-darkBg/95 border-b border-gray-800 px-4 pt-2 pb-6 space-y-4">
-            <div class="flex justify-between items-center pb-2 border-b border-gray-800/80">
-                <span class="text-xs text-gray-400 uppercase font-bold" data-i18n="lang.select">Idioma</span>
-                <div class="flex gap-2">
-                    <button onclick="setLanguage('es')" class="px-2 py-1 rounded bg-gray-800 text-xs font-bold text-brand-gold">ES</button>
-                    <button onclick="setLanguage('en')" class="px-2 py-1 rounded bg-gray-800 text-xs font-bold text-gray-300">EN</button>
-                    <button onclick="setLanguage('pt')" class="px-2 py-1 rounded bg-gray-800 text-xs font-bold text-gray-300">PT</button>
-                    <button onclick="setLanguage('zh')" class="px-2 py-1 rounded bg-gray-800 text-xs font-bold text-gray-300">ZH</button>
-                </div>
+        <!-- Nighttime Voxel Moon & Twinkling Pixel Stars -->
+        <div class="hidden dark:block transition-opacity duration-500">
+            <div class="cloud-drift-2 absolute top-24 right-8 sm:right-20 w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-sky-100 via-celeste-200 to-celeste-400 shadow-[0_0_50px_rgba(125,211,252,0.45)] border-2 border-white/60 opacity-90">
+                <div class="w-3 h-3 bg-celeste-300/60 rounded-sm absolute top-3 left-3"></div>
+                <div class="w-4 h-4 bg-celeste-300/50 rounded-sm absolute bottom-3 right-3"></div>
             </div>
-            <a href="#inicio" data-i18n="nav.home" class="block text-gray-300 hover:text-brand-gold py-2 font-medium border-b border-gray-800/50">Inicio</a>
-            <a href="#caracteristicas" data-i18n="nav.features" class="block text-gray-300 hover:text-brand-gold py-2 font-medium border-b border-gray-800/50">Características</a>
-            <a href="#descargar" data-i18n="nav.download" class="block text-gray-300 hover:text-brand-gold py-2 font-medium border-b border-gray-800/50">Descargas</a>
-            <a href="#comunidad" data-i18n="nav.community" class="block text-gray-300 hover:text-brand-gold py-2 font-medium border-b border-gray-800/50">Comunidad</a>
-            <div class="flex flex-col gap-3 pt-2">
-                <a href="https://discord.gg/6AxkFar" target="_blank" class="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-discord text-white font-semibold">
-                    <i class="fa-brands fa-discord"></i> Discord
-                </a>
-                <a href="#descargar" class="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-brand-gold text-slate-950 font-bold shadow-neon-gold">
-                    <i class="fa-solid fa-download"></i> <span data-i18n="hero.downloadBtn">Descargar Mod</span>
-                </a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Contenido Principal -->
-    <main class="relative pt-20">
-
-        <!-- Iluminación Neón de Fondo -->
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[650px] pointer-events-none opacity-40 overflow-hidden">
-            <div class="absolute -top-40 left-1/4 w-[500px] h-[500px] bg-brand-gold/20 rounded-full blur-[140px]"></div>
-            <div class="absolute top-20 right-1/4 w-[450px] h-[450px] bg-brand-cyan/20 rounded-full blur-[130px]"></div>
-        </div>
-
-        <!-- SECCIÓN HERO -->
-        <section id="inicio" class="relative min-h-[85vh] flex items-center justify-center grid-bg px-4 sm:px-6 lg:px-8 py-20">
-            <div class="max-w-5xl mx-auto text-center relative z-10 flex flex-col items-center">
-                
-                <!-- Insignia -->
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-xs sm:text-sm font-bold mb-8 animate-pulse-glow">
-                    <span class="w-2 h-2 rounded-full bg-brand-gold animate-ping"></span>
-                    <span data-i18n="hero.badge">Exclusivo para Fabric Loader</span>
-                </div>
-
-                <!-- Título Principal -->
-                <h1 class="font-orbitron text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white mb-6 leading-tight">
-                    DOMINA TU ISLA CON <br>
-                    <span class="bg-gradient-to-r from-brand-gold via-yellow-300 to-amber-500 bg-clip-text text-transparent drop-shadow-sm">
-                        SKYBLOCK OP MOD
-                    </span>
-                </h1>
-
-                <!-- Subtítulo -->
-                <p data-i18n="hero.subtitle" class="max-w-3xl text-gray-300 text-base sm:text-lg md:text-xl font-normal leading-relaxed mb-10">
-                    El mod definitivo de utilidad para SkyBlock optimizado exclusivamente para Fabric. Automatización avanzada, calculadora de ingresos en vivo, visor de spawner y un rendimiento fluido garantizado.
-                </p>
-
-                <!-- Botones de Llamada a la Acción -->
-                <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-                    <a href="#descargar" class="flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-brand-gold via-amber-500 to-yellow-600 text-slate-950 font-bold text-lg hover:scale-105 transition-all duration-300 shadow-neon-gold group">
-                        <i class="fa-solid fa-download text-xl group-hover:bounce"></i>
-                        <span data-i18n="hero.downloadBtn">Descargar Gratis</span>
-                    </a>
-                    <a href="https://discord.gg/6AxkFar" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-3 px-8 py-4 rounded-xl glass-panel text-white border border-gray-700 hover:border-discord hover:bg-discord/20 transition-all duration-300 font-semibold text-lg hover:scale-105">
-                        <i class="fa-brands fa-discord text-xl text-discord"></i>
-                        <span data-i18n="hero.discordBtn">Unirse al Discord</span>
-                    </a>
-                </div>
-
-                <!-- Estadísticas de Impacto -->
-                <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 w-full max-w-4xl pt-8 border-t border-gray-800/80">
-                    <div class="flex flex-col items-center">
-                        <span class="font-orbitron text-3xl font-bold text-white">+15k</span>
-                        <span data-i18n="stats.downloads" class="text-xs text-gray-400 mt-1 uppercase tracking-wider">Descargas</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <span class="font-orbitron text-3xl font-bold text-brand-gold">100%</span>
-                        <span data-i18n="stats.fabric" class="text-xs text-gray-400 mt-1 uppercase tracking-wider">Fabric Exclusivo</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <span class="font-orbitron text-3xl font-bold text-brand-cyan">3 Versiones</span>
-                        <span data-i18n="stats.versions" class="text-xs text-gray-400 mt-1 uppercase tracking-wider">1.21.1 / 1.21.11 / 26.3</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <span class="font-orbitron text-3xl font-bold text-amber-400">+300%</span>
-                        <span data-i18n="stats.boost" class="text-xs text-gray-400 mt-1 uppercase tracking-wider">FPS Mejorados</span>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- SECCIÓN CARACTERÍSTICAS -->
-        <section id="caracteristicas" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative">
-            <div class="text-center mb-16">
-                <h2 data-i18n="features.subtitle" class="text-brand-gold font-semibold text-sm tracking-widest uppercase mb-2">Herramientas Épicas</h2>
-                <p data-i18n="features.title" class="font-orbitron text-3xl sm:text-4xl font-bold text-white">CARACTERÍSTICAS OP</p>
-                <div class="w-20 h-1 bg-brand-gold mx-auto mt-4 rounded-full shadow-neon-gold"></div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Tarjeta 1 -->
-                <div class="glass-card p-8 rounded-2xl relative overflow-hidden group">
-                    <div class="w-14 h-14 rounded-xl bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold mb-6 group-hover:scale-110 group-hover:bg-brand-gold group-hover:text-slate-950 transition-all">
-                        <i class="fa-solid fa-coins text-2xl"></i>
-                    </div>
-                    <h3 data-i18n="f1.title" class="text-xl font-bold text-white mb-3">Calculadora de Ganancias OP</h3>
-                    <p data-i18n="f1.desc" class="text-gray-400 text-sm leading-relaxed">
-                        Mide tus ingresos automáticos por minuto y hora vendiendo en las tiendas de tu servidor de SkyBlock en tiempo real.
-                    </p>
-                </div>
-
-                <!-- Tarjeta 2 -->
-                <div class="glass-card p-8 rounded-2xl relative overflow-hidden group">
-                    <div class="w-14 h-14 rounded-xl bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold mb-6 group-hover:scale-110 group-hover:bg-brand-gold group-hover:text-slate-950 transition-all">
-                        <i class="fa-solid fa-bolt text-2xl"></i>
-                    </div>
-                    <h3 data-i18n="f2.title" class="text-xl font-bold text-white mb-3">Soporte Exclusivo Fabric</h3>
-                    <p data-i18n="f2.desc" class="text-gray-400 text-sm leading-relaxed">
-                        Desarrollado desde cero para aprovechar la velocidad y ligereza de Fabric API en versiones seleccionadas.
-                    </p>
-                </div>
-
-                <!-- Tarjeta 3 -->
-                <div class="glass-card p-8 rounded-2xl relative overflow-hidden group">
-                    <div class="w-14 h-14 rounded-xl bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold mb-6 group-hover:scale-110 group-hover:bg-brand-gold group-hover:text-slate-950 transition-all">
-                        <i class="fa-solid fa-eye text-2xl"></i>
-                    </div>
-                    <h3 data-i18n="f3.title" class="text-xl font-bold text-white mb-3">Visor de Generadores y Spawners</h3>
-                    <p data-i18n="f3.desc" class="text-gray-400 text-sm leading-relaxed">
-                        Controla el rendimiento, almacenamiento y tiempos de respuesta de todos los spawners e ingenios de tu isla.
-                    </p>
-                </div>
-
-                <!-- Tarjeta 4 -->
-                <div class="glass-card p-8 rounded-2xl relative overflow-hidden group">
-                    <div class="w-14 h-14 rounded-xl bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold mb-6 group-hover:scale-110 group-hover:bg-brand-gold group-hover:text-slate-950 transition-all">
-                        <i class="fa-solid fa-gauge-high text-2xl"></i>
-                    </div>
-                    <h3 data-i18n="f4.title" class="text-xl font-bold text-white mb-3">HUD Táctico Configurable</h3>
-                    <p data-i18n="f4.desc" class="text-gray-400 text-sm leading-relaxed">
-                        Muestra dinero, nivel de isla, coordenadas, FPS y estadísticas sin saturar la pantalla de juego.
-                    </p>
-                </div>
-
-                <!-- Tarjeta 5 -->
-                <div class="glass-card p-8 rounded-2xl relative overflow-hidden group">
-                    <div class="w-14 h-14 rounded-xl bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold mb-6 group-hover:scale-110 group-hover:bg-brand-gold group-hover:text-slate-950 transition-all">
-                        <i class="fa-solid fa-bell text-2xl"></i>
-                    </div>
-                    <h3 data-i18n="f5.title" class="text-xl font-bold text-white mb-3">Alertas de Eventos Especiales</h3>
-                    <p data-i18n="f5.desc" class="text-gray-400 text-sm leading-relaxed">
-                        Recibe avisos sonoros y visuales cuando inicien subastas, jefes o multiplicadores de venta en tu servidor.
-                    </p>
-                </div>
-
-                <!-- Tarjeta 6 -->
-                <div class="glass-card p-8 rounded-2xl relative overflow-hidden group">
-                    <div class="w-14 h-14 rounded-xl bg-brand-gold/10 border border-brand-gold/30 flex items-center justify-center text-brand-gold mb-6 group-hover:scale-110 group-hover:bg-brand-gold group-hover:text-slate-950 transition-all">
-                        <i class="fa-solid fa-microchip text-2xl"></i>
-                    </div>
-                    <h3 data-i18n="f6.title" class="text-xl font-bold text-white mb-3">Renderizado Zero-Lag</h3>
-                    <p data-i18n="f6.desc" class="text-gray-400 text-sm leading-relaxed">
-                        Optimizaciones avanzadas para mantener FPS estables en megabases repletas de cofres y cultivos.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- SECCIÓN DESCARGAS (ÚNICAMENTE LAS 3 VERSIONES FABRIC SOLICITADAS) -->
-        <section id="descargar" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-            <div class="text-center mb-16">
-                <h2 data-i18n="downloads.subtitle" class="text-brand-gold font-semibold text-sm tracking-widest uppercase mb-2">Descargas Oficiales</h2>
-                <p data-i18n="downloads.title" class="font-orbitron text-3xl sm:text-4xl font-bold text-white">DESCARGAR SKYBLOCK OP MOD</p>
-                <p data-i18n="downloads.desc" class="text-gray-400 mt-2 max-w-xl mx-auto">
-                    Exclusivo para <span class="text-brand-cyan font-bold">Fabric Loader</span>. Elige tu versión correspondiente:
-                </p>
-                <div class="w-20 h-1 bg-brand-gold mx-auto mt-4 rounded-full shadow-neon-gold"></div>
-            </div>
-
-            <!-- Contenedor de las 3 versiones específicas -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                
-                <!-- Opción 1: Minecraft 1.21.1 -->
-                <div class="glass-card rounded-2xl p-6 border border-gray-800 flex flex-col justify-between relative overflow-hidden">
-                    <div>
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="px-3 py-1 rounded-full bg-brand-cyan/20 text-brand-cyan font-bold text-xs" data-i18n="dl.tag1">VERSIÓN 1.21.1</span>
-                            <span class="text-xs text-gray-400">v3.0.1</span>
-                        </div>
-                        <h3 class="font-orbitron text-2xl font-bold text-white mb-1">Minecraft 1.21.1</h3>
-                        <p class="text-xs text-gray-400 mb-6" data-i18n="dl.desc1">Versión ultra estable optimizada para servidores multijugador en 1.21.1.</p>
-
-                        <div class="space-y-3 mb-8 text-sm">
-                            <div class="flex items-center justify-between text-gray-300">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-cube text-brand-gold"></i> Loader:</span>
-                                <span class="font-semibold text-brand-cyan">Fabric (Exclusivo)</span>
-                            </div>
-                            <div class="flex items-center justify-between text-gray-300">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-file-code text-brand-gold"></i> Requisito:</span>
-                                <span class="font-semibold text-white">Fabric API 0.95+</span>
-                            </div>
-                            <div class="flex items-center justify-between text-gray-300">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-hard-drive text-brand-gold"></i> Tamaño:</span>
-                                <span class="font-semibold text-white">20.2 MB</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="space-y-2">
-                        <a href="./SkyblockOP-1.21.11-v2.12.jar" download class="w-full py-3 rounded-xl bg-gray-800 hover:bg-brand-gold hover:text-slate-950 text-white border border-gray-700 font-bold transition-all flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-download"></i> Fabric 1.21.1 (.jar)
-                        </a>
-                        <button onclick="openChangelog('1.21.1 v3.0.1', 'Compatibilidad completa con Fabric API 1.21.1. Corrección de errores en la calculadora de tiendas.')" class="w-full py-2 text-xs text-gray-400 hover:text-brand-gold transition-colors text-center" data-i18n="dl.changelog">
-                            Notas de la Versión
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Opción 2: Minecraft 1.21.11 -->
-                <div class="glass-card rounded-2xl p-6 border border-gray-800 flex flex-col justify-between relative overflow-hidden shadow-glow-lg">
-                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-brand-gold/10 rounded-full blur-xl"></div>
-                    <div>
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="px-3 py-1 rounded-full bg-brand-gold/20 text-brand-gold font-bold text-xs" data-i18n="dl.tag2">RECOMENDADO LTS</span>
-                            <span class="text-xs text-gray-400">v3.1.0</span>
-                        </div>
-                        <h3 class="font-orbitron text-2xl font-bold text-white mb-1">Minecraft 1.21.11</h3>
-                        <p class="text-xs text-gray-400 mb-6" data-i18n="dl.desc2">La versión más popular y probada para las mejores funciones de SkyBlock.</p>
-
-                        <div class="space-y-3 mb-8 text-sm">
-                            <div class="flex items-center justify-between text-gray-300">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-cube text-brand-gold"></i> Loader:</span>
-                                <span class="font-semibold text-brand-cyan">Fabric (Exclusivo)</span>
-                            </div>
-                            <div class="flex items-center justify-between text-gray-300">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-file-code text-brand-gold"></i> Requisito:</span>
-                                <span class="font-semibold text-white">Fabric API 0.100+</span>
-                            </div>
-                            <div class="flex items-center justify-between text-gray-300">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-hard-drive text-brand-gold"></i> Tamaño:</span>
-                                <span class="font-semibold text-white">20.6 MB</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="space-y-2">
-                        <a href="./SkyblockOP-1.21.11-v2.12.jar" download class="w-full py-3 rounded-xl bg-gray-800 hover:bg-brand-gold hover:text-slate-950 text-white border border-gray-700 font-bold transition-all flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-download"></i> Fabric 1.21.11 (.jar)
-                        </a>
-                        <button onclick="openChangelog('1.21.11 v3.1.0', 'Soporte oficial de largo plazo (LTS). Sistema táctico renovado y optimizaciones al render de mapas.')" class="w-full py-2 text-xs text-gray-400 hover:text-brand-gold transition-colors text-center" data-i18n="dl.changelog">
-                            Notas de la Versión
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Opción 3: Minecraft 26.3 -->
-                <div class="glass-card rounded-2xl p-6 border border-gray-800 flex flex-col justify-between relative overflow-hidden">
-                    <div>
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="px-3 py-1 rounded-full bg-purple-500/20 text-purple-400 font-bold text-xs" data-i18n="dl.tag3">NUEVA ACTUALIZACIÓN</span>
-                            <span class="text-xs text-gray-400">v4.0.0-Beta</span>
-                        </div>
-                        <h3 class="font-orbitron text-2xl font-bold text-white mb-1">Minecraft 26.3</h3>
-                        <p class="text-xs text-gray-400 mb-6" data-i18n="dl.desc3">Soporte completo adaptado para la versión reciente de Minecraft 26.3.</p>
-
-                        <div class="space-y-3 mb-8 text-sm">
-                            <div class="flex items-center justify-between text-gray-300">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-cube text-brand-gold"></i> Loader:</span>
-                                <span class="font-semibold text-brand-cyan">Fabric (Exclusivo)</span>
-                            </div>
-                            <div class="flex items-center justify-between text-gray-300">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-file-code text-brand-gold"></i> Requisito:</span>
-                                <span class="font-semibold text-white">Fabric API 26.3+</span>
-                            </div>
-                            <div class="flex items-center justify-between text-gray-300">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-hard-drive text-brand-gold"></i> Tamaño:</span>
-                                <span class="font-semibold text-white">20.9 MB</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="space-y-2">
-                        <a href="./SkyblockOP-1.21.11-v2.12.jar" download class="w-full py-3 rounded-xl bg-gray-800 hover:bg-brand-gold hover:text-slate-950 text-white border border-gray-700 font-bold transition-all flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-download"></i> Fabric 26.3 (.jar)
-                        </a>
-                        <button onclick="openChangelog('26.3 v4.0.0', 'Adaptación completa al motor de la versión 26.3. Mejoras en la velocidad del HUD e interfaz táctica.')" class="w-full py-2 text-xs text-gray-400 hover:text-brand-gold transition-colors text-center" data-i18n="dl.changelog">
-                            Notas de la Versión
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- SECCIÓN DISCORD / COMUNIDAD -->
-        <section id="comunidad" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-            <div class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-discord/20 via-darkCard to-brand-gold/10 border border-discord/30 p-8 sm:p-12 md:p-16 flex flex-col lg:flex-row items-center justify-between gap-10">
-                
-                <div class="max-w-2xl text-center lg:text-left">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-discord/20 text-discord text-xs font-bold mb-4">
-                        <i class="fa-brands fa-discord"></i> <span data-i18n="community.badge">COMUNIDAD OFICIAL</span>
-                    </div>
-                    <h2 data-i18n="community.title" class="font-orbitron text-3xl sm:text-5xl font-black text-white mb-4">
-                        ¿TIENES DUDAS O SUGERENCIAS?
-                    </h2>
-                    <p data-i18n="community.desc" class="text-gray-300 text-base sm:text-lg leading-relaxed">
-                        Únete a nuestro servidor oficial con miles de jugadores. Obtén ayuda rápida, comparte tus configuraciones y entérate de nuevas actualizaciones Fabric.
-                    </p>
-
-                    <div class="mt-6 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm text-gray-300">
-                        <div class="flex items-center gap-2">
-                            <span class="w-3 h-3 rounded-full bg-green-500 animate-pulse"></span>
-                            <span><strong>5,230</strong> <span data-i18n="community.online">En línea</span></span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <span class="w-3 h-3 rounded-full bg-discord"></span>
-                            <span data-i18n="community.support">Soporte Continuo</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="flex-shrink-0 w-full sm:w-auto">
-                    <a href="https://discord.gg/6AxkFar" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto flex items-center justify-center gap-3 px-10 py-5 rounded-2xl bg-discord hover:bg-discord/90 text-white font-bold text-lg transition-all transform hover:scale-105 shadow-neon-discord">
-                        <i class="fa-brands fa-discord text-2xl"></i>
-                        <span data-i18n="hero.discordBtn">Entrar a Discord</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- PIE DE PÁGINA -->
-    <footer class="bg-darkBg border-t border-gray-800/80 pt-16 pb-12 px-4 sm:px-6 lg:px-8 text-gray-400 text-sm">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-            
-            <div class="space-y-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-brand-gold flex items-center justify-center text-slate-950 font-bold">
-                        <i class="fa-solid fa-gem"></i>
-                    </div>
-                    <span class="font-orbitron tracking-wider text-white font-bold">SKYBLOCK OP</span>
-                </div>
-                <p data-i18n="footer.about" class="text-xs text-gray-400 leading-relaxed">
-                    Página oficial del mod SkyBlock OP para Minecraft Fabric (1.21.1, 1.21.11 y 26.3).
-                </p>
-            </div>
-
-            <div>
-                <h4 data-i18n="footer.nav" class="text-white font-semibold mb-4">Navegación</h4>
-                <ul class="space-y-2 text-xs">
-                    <li><a href="#inicio" data-i18n="nav.home" class="hover:text-brand-gold transition-colors">Inicio</a></li>
-                    <li><a href="#caracteristicas" data-i18n="nav.features" class="hover:text-brand-gold transition-colors">Características</a></li>
-                    <li><a href="#descargar" data-i18n="nav.download" class="hover:text-brand-gold transition-colors">Descargas</a></li>
-                    <li><a href="#comunidad" data-i18n="nav.community" class="hover:text-brand-gold transition-colors">Comunidad</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <h4 data-i18n="footer.resources" class="text-white font-semibold mb-4">Recursos</h4>
-                <ul class="space-y-2 text-xs">
-                    <li><a href="https://discord.gg" target="_blank" class="hover:text-brand-gold transition-colors">Discord</a></li>
-                    <li><a href="https://fabricmc.net" target="_blank" class="hover:text-brand-gold transition-colors">FabricMC.net</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <h4 class="text-white font-semibold mb-4">Aviso Legal</h4>
-                <p class="text-xs text-gray-500 leading-relaxed">
-                    Minecraft es marca registrada de Mojang Synergies AB. SkyBlock OP no está afiliado con Mojang ni Microsoft.
-                </p>
-            </div>
-
-        </div>
-
-        <div class="max-w-7xl mx-auto pt-8 border-t border-gray-800/60 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-4">
-            <p>© 2026 SkyBlock OP Mod. Todos los derechos reservados.</p>
-            <p>Creado para la comunidad Fabric de Minecraft.</p>
-        </div>
-    </footer>
-
-    <!-- MODAL NOTAS DE LA VERSIÓN -->
-    <div id="changelog-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-darkCard border border-gray-700 rounded-2xl max-w-md w-full p-6 space-y-4 relative shadow-2xl">
-            <button onclick="closeChangelog()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-lg">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <h3 id="modal-title" class="font-orbitron text-xl font-bold text-brand-gold">Notas de Cambios</h3>
-            <div class="h-px bg-gray-800 my-2"></div>
-            <p id="modal-body" class="text-sm text-gray-300 leading-relaxed"></p>
-            <button onclick="closeChangelog()" class="w-full py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-xl text-sm font-semibold transition-colors">
-                Cerrar
-            </button>
+            <div class="star-twinkle-1 absolute top-16 left-[12%] w-1.5 h-1.5 bg-white rounded-xs shadow-[0_0_8px_#fff]"></div>
+            <div class="star-twinkle-2 absolute top-28 left-[32%] w-2 h-2 bg-celeste-300 rounded-xs shadow-[0_0_10px_#7dd3fc]"></div>
+            <div class="star-twinkle-3 absolute top-20 left-[58%] w-1.5 h-1.5 bg-white rounded-xs"></div>
+            <div class="star-twinkle-1 absolute top-44 left-[18%] w-2 h-2 bg-sky-200 rounded-xs"></div>
+            <div class="star-twinkle-2 absolute top-56 right-[28%] w-1.5 h-1.5 bg-white rounded-xs"></div>
+            <div class="star-twinkle-3 absolute top-1/2 left-[8%] w-1.5 h-1.5 bg-celeste-300 rounded-xs"></div>
+            <div class="star-twinkle-1 absolute top-2/3 right-[12%] w-2 h-2 bg-white rounded-xs"></div>
+            <div class="star-twinkle-2 absolute bottom-32 left-[24%] w-1.5 h-1.5 bg-sky-200 rounded-xs"></div>
+            <div class="absolute top-1/4 left-1/3 w-96 h-96 bg-celeste-500/10 rounded-full blur-3xl"></div>
         </div>
     </div>
 
-    <!-- SCRIPT DE INTERNACIONALIZACIÓN (ESPAÑOL POR DEFECTO + EN, PT, ZH) -->
+    <!-- ==================== FLOATING PILL NAVIGATION BAR ==================== -->
+    <div class="sticky top-3 sm:top-5 z-40 px-3 sm:px-6 max-w-6xl mx-auto">
+        <header class="bento-card rounded-2xl sm:rounded-full px-4 sm:px-6 py-2.5 sm:py-3 shadow-sky-card dark:shadow-night-card flex items-center justify-between gap-2 sm:gap-3">
+            
+            <!-- Brand: Floating Skyblock Island Cube SVG + Skyblockop -->
+            <a href="#" class="flex items-center gap-2.5 group focus:outline-none shrink-0">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-celeste-100 to-celeste-200 dark:from-slate-800 dark:to-celeste-900 border border-celeste-300 dark:border-celeste-500/40 flex items-center justify-center shadow-inner dark:shadow-[0_0_15px_rgba(56,189,248,0.25)] group-hover:scale-105 transition-transform">
+                    <!-- Isometric Floating Skyblock Island & Tree Icon -->
+                    <svg class="w-6 h-6 sm:w-7 sm:h-7" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Grass Top Face -->
+                        <polygon points="32,20 54,31 32,42 10,31" fill="#4ADE80"/>
+                        <!-- Dirt Left Face -->
+                        <polygon points="10,31 32,42 32,56 14,46" fill="#92400E"/>
+                        <!-- Dirt Right Face -->
+                        <polygon points="54,31 32,42 32,56 50,46" fill="#78350F"/>
+                        <!-- Grass Rim -->
+                        <polyline points="10,31 32,42 54,31" stroke="#22C55E" stroke-width="2.5" stroke-linejoin="round"/>
+                        <!-- Oak Tree Trunk -->
+                        <rect x="24" y="16" width="5" height="12" rx="1" fill="#713F12"/>
+                        <!-- Voxel Canopy -->
+                        <polygon points="26.5,4 38,10 26.5,17 15,10" fill="#22C55E"/>
+                        <polygon points="15,10 26.5,17 26.5,22 15,15" fill="#16A34A"/>
+                        <polygon points="38,10 26.5,17 26.5,22 38,15" fill="#15803D"/>
+                        <!-- Cobblestone Ore Accent -->
+                        <polygon points="39,25 46,28.5 39,32 32,28.5" fill="#38BDF8"/>
+                    </svg>
+                </div>
+                <span class="text-lg sm:text-xl font-extrabold tracking-tight text-celeste-900 dark:text-white">
+                    Skyblock<span class="text-celeste-600 dark:text-celeste-400">op</span>
+                </span>
+            </a>
+
+            <!-- Center Pill Links -->
+            <nav class="hidden lg:flex items-center gap-1 bg-celeste-100/80 dark:bg-slate-900/80 p-1 rounded-full border border-celeste-200/80 dark:border-celeste-500/25 text-xs font-bold text-celeste-800 dark:text-celeste-200">
+                <a href="#features" data-i18n="nav_features" class="px-3.5 py-1.5 rounded-full hover:bg-white dark:hover:bg-slate-800 hover:text-celeste-600 dark:hover:text-celeste-300 transition-all">Features</a>
+                <a href="#versions" data-i18n="nav_versions" class="px-3.5 py-1.5 rounded-full hover:bg-white dark:hover:bg-slate-800 hover:text-celeste-600 dark:hover:text-celeste-300 transition-all">Versions</a>
+                <a href="#faq" data-i18n="nav_faq" class="px-3.5 py-1.5 rounded-full hover:bg-white dark:hover:bg-slate-800 hover:text-celeste-600 dark:hover:text-celeste-300 transition-all">FAQ</a>
+                <a href="#discord-hub" data-i18n="nav_community" class="px-3.5 py-1.5 rounded-full hover:bg-white dark:hover:bg-slate-800 hover:text-celeste-600 dark:hover:text-celeste-300 transition-all">Discord</a>
+            </nav>
+
+            <!-- Right Actions: Day/Night Toggle + Language Switcher + Discord -->
+            <div class="flex items-center gap-1.5 sm:gap-2">
+                <!-- Day / Night Mode Toggle Button -->
+                <button id="themeToggleBtn" onclick="toggleTheme()" type="button" aria-label="Toggle Day/Night Mode"
+                    class="flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-full bg-celeste-100 hover:bg-celeste-200/80 dark:bg-slate-800 dark:hover:bg-slate-700 text-celeste-900 dark:text-celeste-200 border border-celeste-300/70 dark:border-celeste-500/35 text-xs font-extrabold transition-all cursor-pointer">
+                    <svg class="hidden dark:block w-3.5 h-3.5 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    <svg class="block dark:hidden w-3.5 h-3.5 text-celeste-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.3" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                    <span id="themeToggleLabel" data-i18n="theme_night" class="hidden sm:inline">Night</span>
+                </button>
+
+                <!-- Language Selector -->
+                <div class="relative">
+                    <button id="langMenuBtn" type="button" aria-label="Change Language"
+                        class="flex items-center gap-1.5 px-3 py-1.5 sm:py-2 rounded-full bg-celeste-100 hover:bg-celeste-200/80 dark:bg-slate-800 dark:hover:bg-slate-700 text-celeste-900 dark:text-celeste-200 border border-celeste-300/70 dark:border-celeste-500/35 text-xs font-extrabold transition-all cursor-pointer">
+                        <svg class="w-3.5 h-3.5 text-celeste-600 dark:text-celeste-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+                        </svg>
+                        <span id="currentLangLabel">EN</span>
+                        <svg class="w-3 h-3 text-celeste-700 dark:text-celeste-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+                        </svg>
+                    </button>
+
+                    <div id="langMenu" class="hidden absolute right-0 mt-2 w-40 rounded-2xl bg-white dark:bg-slate-900 shadow-xl border border-celeste-200 dark:border-celeste-500/30 py-1.5 z-50 overflow-hidden">
+                        <button onclick="setLanguage('en')" class="w-full text-left px-4 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-celeste-50 dark:hover:bg-slate-800 hover:text-celeste-700 dark:hover:text-celeste-300 flex items-center justify-between cursor-pointer">
+                            <span>English</span><span class="font-mono text-celeste-500">EN</span>
+                        </button>
+                        <button onclick="setLanguage('es')" class="w-full text-left px-4 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-celeste-50 dark:hover:bg-slate-800 hover:text-celeste-700 dark:hover:text-celeste-300 flex items-center justify-between cursor-pointer">
+                            <span>Español</span><span class="font-mono text-celeste-500">ES</span>
+                        </button>
+                        <button onclick="setLanguage('pt')" class="w-full text-left px-4 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-celeste-50 dark:hover:bg-slate-800 hover:text-celeste-700 dark:hover:text-celeste-300 flex items-center justify-between cursor-pointer">
+                            <span>Português</span><span class="font-mono text-celeste-500">PT</span>
+                        </button>
+                        <button onclick="setLanguage('zh')" class="w-full text-left px-4 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-celeste-50 dark:hover:bg-slate-800 hover:text-celeste-700 dark:hover:text-celeste-300 flex items-center justify-between cursor-pointer">
+                            <span>中文 (简体)</span><span class="font-mono text-celeste-500">ZH</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Discord Direct Pill -->
+                <a href="https://discord.gg/6AxkFar" target="_blank" rel="noopener noreferrer"
+                    class="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-celeste-600 hover:bg-celeste-700 dark:bg-celeste-500 dark:hover:bg-celeste-400 text-white dark:text-slate-950 text-xs font-extrabold shadow-sm transition-all">
+                    <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                        <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028z"/>
+                    </svg>
+                    <span class="hidden sm:inline">Discord</span>
+                </a>
+            </div>
+        </header>
+    </div>
+
+    <!-- ==================== MAIN BENTO DASHBOARD CONTAINER ==================== -->
+    <main class="relative z-10 max-w-6xl mx-auto px-3 sm:px-6 pt-6 sm:pt-10 pb-16 space-y-6 sm:space-y-8">
+
+        <!-- ==================== ROW 1: ASYMMETRIC BENTO HERO ==================== -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch">
+            
+            <!-- Left Main Bento Tile (8 Cols): Brand Editorial + Skyblock Island Emblem -->
+            <div class="lg:col-span-8 bento-card rounded-3xl p-6 sm:p-10 shadow-sky-card dark:shadow-night-card flex flex-col justify-between relative overflow-hidden">
+                <div class="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-gradient-to-br from-celeste-300/35 to-emerald-300/20 dark:from-celeste-500/20 dark:to-indigo-500/15 blur-2xl pointer-events-none"></div>
+
+                <div>
+                    <!-- Top Pill Badges -->
+                    <div class="flex flex-wrap items-center gap-2 mb-6">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 dark:bg-amber-500/20 text-amber-800 dark:text-amber-300 border border-amber-400/40 text-xs font-extrabold">
+                            <span>★</span>
+                            <span data-i18n="badge_downloads">+50K Downloads</span>
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-300 border border-emerald-400/40 text-xs font-extrabold">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 dark:bg-emerald-400"></span>
+                            <span data-i18n="badge_content">Generators • Custom Mobs • OP Gear</span>
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-celeste-500/15 dark:bg-celeste-400/15 text-celeste-800 dark:text-celeste-200 border border-celeste-400/40 text-xs font-bold">
+                            <span data-i18n="badge_loaders">Fabric & Forge 1.21 – 26.3</span>
+                        </span>
+                    </div>
+
+                    <!-- Headline + Floating Skyblock Island Emblem -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-6">
+                        <div class="space-y-3">
+                            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-celeste-900 dark:text-white leading-[1.1]">
+                                <span data-i18n="hero_title_1">Upgrade Your Skyblock</span>
+                                <span class="block text-celeste-600 dark:text-celeste-400" data-i18n="hero_title_2">With Generators & OP Gear.</span>
+                            </h1>
+                            <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl" data-i18n="hero_desc">
+                                Skyblockop transforms classic Skyblock into an action-packed progression adventure—featuring automated ore generators, custom island bosses, elemental swords, 3x3 vein pickaxes, and custom island upgrades.
+                            </p>
+                        </div>
+
+                        <!-- Prominent Voxel Skyblock Island Emblem -->
+                        <div class="shrink-0 self-center sm:self-start island-float">
+                            <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-gradient-to-b from-celeste-100 to-white dark:from-slate-800 dark:to-celeste-900/90 border-2 border-celeste-300/90 dark:border-celeste-400/50 shadow-sky-card dark:shadow-[0_0_30px_rgba(56,189,248,0.28)] flex items-center justify-center">
+                                <svg class="w-16 h-16 sm:w-20 sm:h-20 drop-shadow" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Sky Halo -->
+                                    <ellipse cx="60" cy="84" rx="46" ry="14" stroke="#38BDF8" stroke-width="2" stroke-dasharray="5 4" opacity="0.7"/>
+                                    <!-- Grass Top Face -->
+                                    <polygon points="60,42 102,63 60,84 18,63" fill="#4ADE80"/>
+                                    <!-- Dirt Left Face -->
+                                    <polygon points="18,63 60,84 60,108 26,90" fill="#92400E"/>
+                                    <!-- Dirt Right Face -->
+                                    <polygon points="102,63 60,84 60,108 94,90" fill="#78350F"/>
+                                    <!-- Grass Edge Highlight -->
+                                    <polyline points="18,63 60,84 102,63" stroke="#22C55E" stroke-width="3.5" stroke-linejoin="round"/>
+                                    <!-- Crystal Ore Block on Island -->
+                                    <polygon points="78,51 90,57 78,63 66,57" fill="#38BDF8"/>
+                                    <polygon points="66,57 78,63 78,72 66,66" fill="#0284C7"/>
+                                    <polygon points="90,57 78,63 78,72 90,66" fill="#0369A1"/>
+                                    <!-- Oak Tree Trunk -->
+                                    <rect x="44" y="34" width="9" height="22" rx="1.5" fill="#713F12"/>
+                                    <!-- Voxel Tree Leaves -->
+                                    <polygon points="48.5,10 72,22 48.5,35 25,22" fill="#22C55E"/>
+                                    <polygon points="25,22 48.5,35 48.5,43 25,30" fill="#16A34A"/>
+                                    <polygon points="72,22 48.5,35 48.5,43 72,30" fill="#15803D"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Action Row inside Left Bento -->
+                <div class="pt-4 border-t border-celeste-200/70 dark:border-celeste-500/20 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                    <a href="#versions"
+                        class="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-celeste-600 hover:bg-celeste-700 dark:bg-celeste-500 dark:hover:bg-celeste-400 text-white dark:text-slate-950 font-extrabold text-sm shadow-sky-glow transition-all transform hover:-translate-y-0.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                        </svg>
+                        <span data-i18n="cta_download">Download Skyblockop</span>
+                    </a>
+
+                    <a href="https://discord.gg/6AxkFar" target="_blank" rel="noopener noreferrer"
+                        class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-2xl bg-celeste-100/90 hover:bg-celeste-200/80 dark:bg-slate-800/90 dark:hover:bg-slate-700 text-celeste-900 dark:text-celeste-200 border border-celeste-300/70 dark:border-celeste-500/30 font-bold text-sm transition-all">
+                        <svg class="w-4 h-4 text-celeste-700 dark:text-celeste-400 fill-current" viewBox="0 0 24 24">
+                            <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028z"/>
+                        </svg>
+                        <span data-i18n="cta_discord">Join Discord Community</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Right Bento Column (4 Cols): Key Mod Content Highlights -->
+            <div class="lg:col-span-4 bento-card rounded-3xl p-6 shadow-sky-card dark:shadow-night-card flex flex-col justify-center gap-3">
+                <div class="p-3.5 rounded-2xl bg-amber-500/15 dark:bg-amber-500/20 border border-amber-400/35 flex items-center justify-between">
+                    <span class="text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100" data-i18n="stat_downloads">Total Downloads</span>
+                    <span class="text-lg sm:text-xl font-extrabold text-amber-700 dark:text-amber-300">+50K</span>
+                </div>
+                <div class="p-3.5 rounded-2xl bg-celeste-100/70 dark:bg-slate-800/80 flex items-center justify-between">
+                    <span class="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200" data-i18n="stat_gens">Ore Generators</span>
+                    <span class="text-lg sm:text-xl font-extrabold text-celeste-700 dark:text-celeste-400">12 Tiers</span>
+                </div>
+                <div class="p-3.5 rounded-2xl bg-emerald-500/10 dark:bg-emerald-500/15 flex items-center justify-between">
+                    <span class="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200" data-i18n="stat_mobs">Island Bosses</span>
+                    <span class="text-lg sm:text-xl font-extrabold text-emerald-700 dark:text-emerald-400">18+ Mobs</span>
+                </div>
+                <div class="p-3.5 rounded-2xl bg-celeste-100/70 dark:bg-slate-800/80 flex items-center justify-between">
+                    <span class="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-200" data-i18n="stat_gear">Swords & Pickaxes</span>
+                    <span class="text-lg sm:text-xl font-extrabold text-celeste-700 dark:text-celeste-400">35+ Gear</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== ROW 2: SKYBLOCKOP NEW FEATURES STRIP ==================== -->
+        <section id="features" class="bento-card rounded-3xl p-6 sm:p-8 shadow-sky-card dark:shadow-night-card">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+                <div>
+                    <span class="text-xs font-extrabold uppercase tracking-widest text-celeste-600 dark:text-celeste-400" data-i18n="feat_eyebrow">Mod Mechanics</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-celeste-900 dark:text-white mt-1" data-i18n="feat_title">
+                        Built for Endless Skyblock Progression
+                    </h2>
+                </div>
+                <span class="text-xs font-semibold text-slate-500 dark:text-slate-400" data-i18n="feat_note">Works in Singleplayer & Multiplayer Skyblock worlds.</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+                <!-- Feature 1: Generators -->
+                <div class="p-5 rounded-2xl bg-gradient-to-br from-celeste-100/80 to-white dark:from-slate-800/90 dark:to-slate-900/90 border border-celeste-200/90 dark:border-celeste-500/20">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="w-9 h-9 rounded-xl bg-celeste-600 dark:bg-celeste-500 text-white dark:text-slate-950 font-extrabold text-base flex items-center justify-center shadow-sm">⛏</span>
+                        <h3 class="font-extrabold text-celeste-900 dark:text-white text-base" data-i18n="f1_title">Smart Generators</h3>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="f1_desc">
+                        Upgradeable Cobblestone, Iron, Diamond, and Void Crystal generators that produce rare ores automatically as your island levels up.
+                    </p>
+                </div>
+
+                <!-- Feature 2: Custom Mobs & Bosses -->
+                <div class="p-5 rounded-2xl bg-gradient-to-br from-celeste-100/80 to-white dark:from-slate-800/90 dark:to-slate-900/90 border border-celeste-200/90 dark:border-celeste-500/20">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="w-9 h-9 rounded-xl bg-emerald-500 text-white dark:text-slate-950 font-extrabold text-base flex items-center justify-center shadow-sm">👾</span>
+                        <h3 class="font-extrabold text-celeste-900 dark:text-white text-base" data-i18n="f2_title">Custom Mobs & Bosses</h3>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="f2_desc">
+                        Battle Sky Slimes, Void Golems, and summoned Island Guardians that drop rare shards and catalyst cores for crafting.
+                    </p>
+                </div>
+
+                <!-- Feature 3: OP Swords & 3x3 Pickaxes -->
+                <div class="p-5 rounded-2xl bg-gradient-to-br from-celeste-100/80 to-white dark:from-slate-800/90 dark:to-slate-900/90 border border-celeste-200/90 dark:border-celeste-500/20">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="w-9 h-9 rounded-xl bg-celeste-600 dark:bg-celeste-500 text-white dark:text-slate-950 font-extrabold text-base flex items-center justify-center shadow-sm">⚔</span>
+                        <h3 class="font-extrabold text-celeste-900 dark:text-white text-base" data-i18n="f3_title">OP Swords & Pickaxes</h3>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="f3_desc">
+                        Craft 3x3 Area Pickaxes with Auto-Smelt, Lightning Blades, and Void Reapers with custom abilities and upgrade sockets.
+                    </p>
+                </div>
+
+                <!-- Feature 4: Minions & Island Quests -->
+                <div class="p-5 rounded-2xl bg-gradient-to-br from-celeste-100/80 to-white dark:from-slate-800/90 dark:to-slate-900/90 border border-celeste-200/90 dark:border-celeste-500/20">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="w-9 h-9 rounded-xl bg-amber-500 text-white dark:text-slate-950 font-extrabold text-base flex items-center justify-center shadow-sm">🏝</span>
+                        <h3 class="font-extrabold text-celeste-900 dark:text-white text-base" data-i18n="f4_title">Island Quests & Shops</h3>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed" data-i18n="f4_desc">
+                        Complete built-in Skyblock milestone quests, unlock floating biome islands, and trade Sky Coins for rare blueprints.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== ROW 3: SIDE-BY-SIDE VERSION MATRIX & DOWNLOAD CENTER ==================== -->
+        <section id="versions" class="bento-card rounded-3xl p-6 sm:p-9 shadow-sky-card dark:shadow-night-card">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-celeste-200/80 dark:border-celeste-500/20">
+                <div>
+                    <span class="text-xs font-extrabold uppercase tracking-widest text-celeste-600 dark:text-celeste-400" data-i18n="dl_eyebrow">Official Downloads</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-celeste-900 dark:text-white mt-1" data-i18n="dl_title">
+                        Select Your Mod Loader & Version
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1" data-i18n="dl_subtitle">
+                        Includes built-in Skyblock world preset, generators, custom mobs, and OP weapons.
+                    </p>
+                </div>
+
+                <!-- Interactive Version Filter Pills -->
+                <div class="flex flex-wrap items-center gap-2 bg-celeste-100/80 dark:bg-slate-900/90 p-1.5 rounded-2xl border border-celeste-200 dark:border-celeste-500/25">
+                    <button onclick="setVersionFilter('ALL')" id="vtab-ALL"
+                        class="vtab-btn px-3.5 py-2 rounded-xl text-xs font-extrabold bg-celeste-600 dark:bg-celeste-500 text-white dark:text-slate-950 shadow-sm transition-all cursor-pointer" data-i18n="filter_all">
+                        All Versions
+                    </button>
+                    <button onclick="setVersionFilter('26.3')" id="vtab-26.3"
+                        class="vtab-btn px-3.5 py-2 rounded-xl text-xs font-extrabold text-celeste-800 dark:text-celeste-200 hover:bg-white dark:hover:bg-slate-800 transition-all cursor-pointer">
+                        MC 26.3
+                    </button>
+                    <button onclick="setVersionFilter('1.21.11')" id="vtab-1.21.11"
+                        class="vtab-btn px-3.5 py-2 rounded-xl text-xs font-extrabold text-celeste-800 dark:text-celeste-200 hover:bg-white dark:hover:bg-slate-800 transition-all cursor-pointer">
+                        MC 1.21.11
+                    </button>
+                    <button onclick="setVersionFilter('1.21.1')" id="vtab-1.21.1"
+                        class="vtab-btn px-3.5 py-2 rounded-xl text-xs font-extrabold text-celeste-800 dark:text-celeste-200 hover:bg-white dark:hover:bg-slate-800 transition-all cursor-pointer">
+                        MC 1.21.1
+                    </button>
+                </div>
+            </div>
+
+            <!-- Two-Column Loader Split Matrix (Fabric vs Forge) -->
+            <div id="loaderMatrixGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+                <!-- Populated cleanly via JS -->
+            </div>
+        </section>
+
+        <!-- ==================== ROW 4: FREQUENTLY ASKED QUESTIONS (FAQ) ==================== -->
+        <section id="faq" class="bento-card rounded-3xl p-6 sm:p-9 shadow-sky-card dark:shadow-night-card">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+                <div>
+                    <span class="text-xs font-extrabold uppercase tracking-widest text-celeste-600 dark:text-celeste-400" data-i18n="faq_eyebrow">Questions & Answers</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-celeste-900 dark:text-white mt-1" data-i18n="faq_title">
+                        Frequently Asked Questions
+                    </h2>
+                </div>
+                <span class="text-xs font-semibold text-slate-500 dark:text-slate-400" data-i18n="faq_subtitle">Everything you need to know about Skyblockop.</span>
+            </div>
+
+            <div id="faqAccordionList" class="space-y-3">
+                <!-- Populated dynamically via JS with full multi-language translations -->
+            </div>
+        </section>
+
+        <!-- ==================== ROW 5: DISCORD COMMUNITY & SUPPORT BENTO ==================== -->
+        <section id="discord-hub" class="rounded-3xl overflow-hidden bg-gradient-to-r from-celeste-600 via-celeste-500 to-sky-400 dark:from-celeste-900 dark:via-sky-900 dark:to-indigo-950 border border-transparent dark:border-celeste-400/30 text-white p-6 sm:p-10 shadow-sky-glow relative">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+                <div class="space-y-2 text-center md:text-left max-w-2xl">
+                    <span class="inline-block px-3 py-1 rounded-full bg-white/20 text-white text-xs font-extrabold tracking-wide" data-i18n="disc_badge">
+                        Discord Community & Wiki
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight" data-i18n="disc_title">
+                        Share Island Builds & Crafting Recipes
+                    </h2>
+                    <p class="text-xs sm:text-sm text-celeste-50 leading-relaxed" data-i18n="disc_desc">
+                        Join the official Skyblockop Discord to discover secret generator recipes, report boss drops, team up with other players, and get notified about new content updates.
+                    </p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full sm:w-auto">
+                    <a href="https://discord.gg/6AxkFar" target="_blank" rel="noopener noreferrer"
+                        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-white hover:bg-celeste-50 text-celeste-900 font-extrabold text-xs sm:text-sm shadow-md transition-all">
+                        <span data-i18n="disc_join_btn">Open Discord</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==================== COMPACT SKY FOOTER ==================== -->
+    <footer class="relative z-10 max-w-6xl mx-auto px-3 sm:px-6 pb-10">
+        <div class="bento-card rounded-3xl px-6 py-5 shadow-sky-card dark:shadow-night-card flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-600 dark:text-slate-300">
+            <div class="flex items-center gap-2.5 font-extrabold text-celeste-900 dark:text-white">
+                <span>Skyblockop Mod</span>
+                <span class="text-celeste-400">•</span>
+                <span class="font-medium text-slate-500 dark:text-slate-400" data-i18n="footer_note">Not affiliated with Mojang or Microsoft.</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button onclick="setLanguage('en')" class="px-2.5 py-1 rounded-lg bg-celeste-100 hover:bg-celeste-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-celeste-800 dark:text-celeste-200 font-bold cursor-pointer">EN</button>
+                <button onclick="setLanguage('es')" class="px-2.5 py-1 rounded-lg bg-celeste-100 hover:bg-celeste-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-celeste-800 dark:text-celeste-200 font-bold cursor-pointer">ES</button>
+                <button onclick="setLanguage('pt')" class="px-2.5 py-1 rounded-lg bg-celeste-100 hover:bg-celeste-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-celeste-800 dark:text-celeste-200 font-bold cursor-pointer">PT</button>
+                <button onclick="setLanguage('zh')" class="px-2.5 py-1 rounded-lg bg-celeste-100 hover:bg-celeste-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-celeste-800 dark:text-celeste-200 font-bold cursor-pointer">中文</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== DOWNLOAD CONFIRMATION MODAL ==================== -->
+    <div id="downloadModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-celeste-900/50 dark:bg-slate-950/75 backdrop-blur-sm p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl max-w-md w-full p-6 sm:p-7 border-2 border-celeste-200 dark:border-celeste-500/35 shadow-2xl">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-celeste-100 dark:bg-celeste-500/20 text-celeste-600 dark:text-celeste-400 flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-celeste-900 dark:text-white" data-i18n="modal_title">Downloading Skyblockop</h3>
+                </div>
+                <button onclick="closeDownloadModal()" class="p-1.5 rounded-xl text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="bg-celeste-50 dark:bg-slate-800/80 rounded-2xl p-4 border border-celeste-200 dark:border-celeste-500/25 mb-4">
+                <div class="text-[11px] font-extrabold uppercase tracking-wider text-celeste-600 dark:text-celeste-400 mb-1" data-i18n="modal_pkg">Mod Package</div>
+                <div id="modalFileName" class="font-mono text-sm font-bold text-celeste-900 dark:text-white break-all">skyblockop-3.1.0-fabric-26.3.jar</div>
+                <div id="modalMeta" class="text-xs text-slate-600 dark:text-slate-300 mt-1">Fabric • Minecraft 26.3 • Generators, Mobs & OP Gear</div>
+            </div>
+
+            <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-5" data-i18n="modal_hint">
+                Move this <strong>.jar</strong> file into your Minecraft <code class="px-1.5 py-0.5 rounded bg-celeste-100 dark:bg-slate-800 text-celeste-800 dark:text-celeste-300 font-mono text-xs">/mods</code> folder and create a new world with the <strong>Skyblockop</strong> world type!
+            </p>
+
+            <div class="flex items-center gap-3">
+                <a href="https://discord.gg/6AxkFar" target="_blank" rel="noopener noreferrer"
+                    class="flex-1 py-2.5 px-4 rounded-xl bg-celeste-100 hover:bg-celeste-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-celeste-900 dark:text-celeste-200 font-bold text-xs sm:text-sm text-center transition-colors">
+                    Discord
+                </a>
+                <button onclick="closeDownloadModal()"
+                    class="flex-1 py-2.5 px-4 rounded-xl bg-celeste-600 hover:bg-celeste-700 dark:bg-celeste-500 dark:hover:bg-celeste-400 text-white dark:text-slate-950 font-bold text-xs sm:text-sm transition-colors cursor-pointer" data-i18n="modal_done">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT LOGIC & MULTI-LANGUAGE ==================== -->
     <script>
-        const translations = {
-            es: {
-                "nav.home": "Inicio",
-                "nav.features": "Características",
-                "nav.download": "Descargas",
-                "nav.community": "Comunidad",
-                "lang.select": "Idioma",
-                "hero.badge": "Exclusivo para Fabric Loader",
-                "hero.subtitle": "El mod definitivo de utilidad para SkyBlock optimizado exclusivamente para Fabric. Automatización avanzada, calculadora de ingresos en vivo, visor de spawner y un rendimiento fluido garantizado.",
-                "hero.downloadBtn": "Descargar Gratis",
-                "hero.discordBtn": "Unirse al Discord",
-                "stats.downloads": "Descargas",
-                "stats.fabric": "Fabric Exclusivo",
-                "stats.versions": "1.21.1 / 1.21.11 / 26.3",
-                "stats.boost": "FPS Mejorados",
-                "features.subtitle": "Herramientas Épicas",
-                "features.title": "CARACTERÍSTICAS OP",
-                "f1.title": "Calculadora de Ganancias OP",
-                "f1.desc": "Mide tus ingresos automáticos por minuto y hora vendiendo en las tiendas de tu servidor de SkyBlock en tiempo real.",
-                "f2.title": "Soporte Exclusivo Fabric",
-                "f2.desc": "Desarrollado desde cero para aprovechar la velocidad y ligereza de Fabric API en versiones seleccionadas.",
-                "f3.title": "Visor de Generadores y Spawners",
-                "f3.desc": "Controla el rendimiento, almacenamiento y tiempos de respuesta de todos los spawners e ingenios de tu isla.",
-                "f4.title": "HUD Táctico Configurable",
-                "f4.desc": "Muestra dinero, nivel de isla, coordenadas, FPS y estadísticas sin saturar la pantalla de juego.",
-                "f5.title": "Alertas de Eventos Especiales",
-                "f5.desc": "Recibe avisos sonoros y visuales cuando inicien subastas, jefes o multiplicadores de venta en tu servidor.",
-                "f6.title": "Renderizado Zero-Lag",
-                "f6.desc": "Optimizaciones avanzadas para mantener FPS estables en megabases repletas de cofres y cultivos.",
-                "downloads.subtitle": "Descargas Oficiales",
-                "downloads.title": "DESCARGAR SKYBLOCK OP MOD",
-                "downloads.desc": "Exclusivo para Fabric Loader. Elige tu versión correspondiente:",
-                "dl.tag1": "VERSIÓN 1.21.1",
-                "dl.tag2": "RECOMENDADO LTS",
-                "dl.tag3": "NUEVA ACTUALIZACIÓN",
-                "dl.desc1": "Versión ultra estable optimizada para servidores multijugador en 1.21.1.",
-                "dl.desc2": "La versión más popular y probada para las mejores funciones de SkyBlock.",
-                "dl.desc3": "Soporte completo adaptado para la versión reciente de Minecraft 26.3.",
-                "dl.changelog": "Notas de la Versión",
-                "community.badge": "COMUNIDAD OFICIAL",
-                "community.title": "¿TIENES DUDAS O SUGERENCIAS?",
-                "community.desc": "Únete a nuestro servidor oficial con miles de jugadores. Obtén ayuda rápida, comparte tus configuraciones y entérate de nuevas actualizaciones Fabric.",
-                "community.online": "En línea",
-                "community.support": "Soporte Continuo",
-                "footer.about": "Página oficial del mod SkyBlock OP para Minecraft Fabric (1.21.1, 1.21.11 y 26.3).",
-                "footer.nav": "Navegación",
-                "footer.resources": "Recursos"
-            },
+        // Skyblockop Mod Releases Data (All pointing to ./SkyblockOP-1.21.11-v2.12.jar)
+        const DOWNLOAD_URL = './SkyblockOP-1.21.11-v2.12.jar';
+        const DOWNLOAD_FILENAME = 'SkyblockOP-1.21.11-v2.12.jar';
+
+        const releasesData = [
+            { id: 'fabric-26.3', loader: 'Fabric', mc: '26.3', ver: 'v2.12', file: DOWNLOAD_FILENAME, url: DOWNLOAD_URL, size: '21.4 MB', latest: true },
+            { id: 'fabric-1.21.11', loader: 'Fabric', mc: '1.21.11', ver: 'v2.12', file: DOWNLOAD_FILENAME, url: DOWNLOAD_URL, size: '20.6 MB', latest: false },
+            { id: 'fabric-1.21.1', loader: 'Fabric', mc: '1.21.1', ver: 'v2.12', file: DOWNLOAD_FILENAME, url: DOWNLOAD_URL, size: '19.8 MB', latest: false },
+            { id: 'forge-26.3', loader: 'Forge', mc: '26.3', ver: 'v2.12', file: DOWNLOAD_FILENAME, url: DOWNLOAD_URL, size: '22.9 MB', latest: true },
+            { id: 'forge-1.21.11', loader: 'Forge', mc: '1.21.11', ver: 'v2.12', file: DOWNLOAD_FILENAME, url: DOWNLOAD_URL, size: '21.7 MB', latest: false },
+            { id: 'forge-1.21.1', loader: 'Forge', mc: '1.21.1', ver: 'v2.12', file: DOWNLOAD_FILENAME, url: DOWNLOAD_URL, size: '20.3 MB', latest: false }
+        ];
+
+        // Multi-language dictionary (EN default, ES, PT, ZH)
+        const i18n = {
             en: {
-                "nav.home": "Home",
-                "nav.features": "Features",
-                "nav.download": "Downloads",
-                "nav.community": "Community",
-                "lang.select": "Language",
-                "hero.badge": "Exclusive for Fabric Loader",
-                "hero.subtitle": "The ultimate SkyBlock utility mod built exclusively for Fabric. Advanced automation, live earnings calculator, spawner viewer, and smooth performance guaranteed.",
-                "hero.downloadBtn": "Download Free",
-                "hero.discordBtn": "Join Discord",
-                "stats.downloads": "Downloads",
-                "stats.fabric": "Fabric Exclusive",
-                "stats.versions": "1.21.1 / 1.21.11 / 26.3",
-                "stats.boost": "FPS Boosted",
-                "features.subtitle": "Epic Tools",
-                "features.title": "OP FEATURES",
-                "f1.title": "OP Profit Calculator",
-                "f1.desc": "Track live revenue per minute and hour selling directly to SkyBlock server shops.",
-                "f2.title": "Exclusive Fabric Support",
-                "f2.desc": "Engineered from scratch using Fabric API lightness and speed for chosen versions.",
-                "f3.title": "Spawner & Generator Tracker",
-                "f3.desc": "Monitor output rates, cooldown timers, and storage space on your island automation builds.",
-                "f4.title": "Configurable Tactical HUD",
-                "f4.desc": "Display coins, island stats, durability, FPS, and coordinates neatly on screen.",
-                "f5.title": "Special Event Alerts",
-                "f5.desc": "Get audio and visual warnings when island bosses, sales, or SkyBlock events begin.",
-                "f6.title": "Zero-Lag Rendering",
-                "f6.desc": "Performance optimizations designed to keep high FPS across massive islands and farms.",
-                "downloads.subtitle": "Official Downloads",
-                "downloads.title": "DOWNLOAD SKYBLOCK OP MOD",
-                "downloads.desc": "Exclusive for Fabric Loader. Select your desired Minecraft version:",
-                "dl.tag1": "VERSION 1.21.1",
-                "dl.tag2": "RECOMMENDED LTS",
-                "dl.tag3": "NEW UPDATE",
-                "dl.desc1": "Ultra stable build optimized for 1.21.1 multiplayer servers.",
-                "dl.desc2": "Most tested and recommended version for SkyBlock features.",
-                "dl.desc3": "Full support adapted for the modern Minecraft 26.3 update.",
-                "dl.changelog": "Release Notes",
-                "community.badge": "OFFICIAL COMMUNITY",
-                "community.title": "HAVE QUESTIONS OR SUGGESTIONS?",
-                "community.desc": "Join thousands of players in our official Discord server. Get fast support and Fabric news.",
-                "community.online": "Online",
-                "community.support": "Continuous Support",
-                "footer.about": "Official landing page for SkyBlock OP Mod (Fabric 1.21.1, 1.21.11, and 26.3).",
-                "footer.nav": "Navigation",
-                "footer.resources": "Resources"
+                nav_features: "Features",
+                nav_versions: "Versions",
+                nav_faq: "FAQ",
+                nav_community: "Discord",
+                theme_night: "Night",
+                theme_day: "Day",
+                badge_downloads: "+50K Downloads",
+                badge_content: "Generators • Custom Mobs • OP Gear",
+                badge_loaders: "Fabric & Forge 1.21 – 26.3",
+                hero_title_1: "Upgrade Your Skyblock",
+                hero_title_2: "With Generators & OP Gear.",
+                hero_desc: "Skyblockop transforms classic Skyblock into an action-packed progression adventure—featuring automated ore generators, custom island bosses, elemental swords, 3x3 vein pickaxes, and custom island upgrades.",
+                cta_download: "Download Skyblockop",
+                cta_discord: "Join Discord Community",
+                stat_downloads: "Total Downloads",
+                stat_gens: "Ore Generators",
+                stat_mobs: "Island Bosses",
+                stat_gear: "Swords & Pickaxes",
+                feat_eyebrow: "Mod Mechanics",
+                feat_title: "Built for Endless Skyblock Progression",
+                feat_note: "Works in Singleplayer & Multiplayer Skyblock worlds.",
+                f1_title: "Smart Generators",
+                f1_desc: "Upgradeable Cobblestone, Iron, Diamond, and Void Crystal generators that produce rare ores automatically as your island levels up.",
+                f2_title: "Custom Mobs & Bosses",
+                f2_desc: "Battle Sky Slimes, Void Golems, and summoned Island Guardians that drop rare shards and catalyst cores for crafting.",
+                f3_title: "OP Swords & Pickaxes",
+                f3_desc: "Craft 3x3 Area Pickaxes with Auto-Smelt, Lightning Blades, and Void Reapers with custom abilities and upgrade sockets.",
+                f4_title: "Island Quests & Shops",
+                f4_desc: "Complete built-in Skyblock milestone quests, unlock floating biome islands, and trade Sky Coins for rare blueprints.",
+                dl_eyebrow: "Official Downloads",
+                dl_title: "Select Your Mod Loader & Version",
+                dl_subtitle: "Includes built-in Skyblock world preset, generators, custom mobs, and OP weapons.",
+                filter_all: "All Versions",
+                dl_btn: "Download .jar",
+                dl_latest: "Latest",
+                dl_compat: "Generators, Mobs & OP Gear",
+                faq_eyebrow: "Questions & Answers",
+                faq_title: "Frequently Asked Questions",
+                faq_subtitle: "Everything you need to know about Skyblockop.",
+                faqs: [
+                    {
+                        q: "Does Skyblockop cause lag with lots of automated generators?",
+                        a: "No! Skyblockop uses tick-batched generation and smart item stacking inside generator hoppers, keeping your TPS at a solid 20.0 and preserving high FPS even on large islands."
+                    },
+                    {
+                        q: "How do I start a Skyblockop world?",
+                        a: "Simply click 'Create New World' in Minecraft, go to the World tab, and select the 'Skyblockop Island' preset. You will spawn on a starter floating island with your first Cobblestone Generator and Quest Book."
+                    },
+                    {
+                        q: "What new swords, pickaxes, and armor does the mod add?",
+                        a: "Skyblockop adds over 35 custom tools and weapons, including 3x3 Quarry Pickaxes with built-in Auto-Smelt, Magnet Drills, Stormcaller Swords with chain lightning, and Skyward Winged Armor."
+                    },
+                    {
+                        q: "How do custom mobs and island bosses spawn?",
+                        a: "Custom Skyblock mobs like Crystal Slimes and Void Stalkers spawn naturally on dark island platforms, while tier bosses like the Sky Warden can be summoned using Boss Totems crafted from generator drops."
+                    },
+                    {
+                        q: "Can I use Skyblockop on a multiplayer server with friends?",
+                        a: "Yes! Skyblockop includes team island sharing commands (/island invite) and works seamlessly on dedicated Fabric/Forge servers or LAN/world-sharing mods."
+                    }
+                ],
+                disc_badge: "Discord Community & Wiki",
+                disc_title: "Share Island Builds & Crafting Recipes",
+                disc_desc: "Join the official Skyblockop Discord to discover secret generator recipes, report boss drops, team up with other players, and get notified about new content updates.",
+                disc_join_btn: "Open Discord",
+                footer_note: "Not affiliated with Mojang or Microsoft.",
+                modal_title: "Downloading Skyblockop",
+                modal_pkg: "Mod Package",
+                modal_hint: "Move this .jar file into your Minecraft /mods folder and create a new world with the Skyblockop world type!",
+                modal_done: "Close"
+            },
+            es: {
+                nav_features: "Funciones",
+                nav_versions: "Versiones",
+                nav_faq: "Preguntas",
+                nav_community: "Discord",
+                theme_night: "Noche",
+                theme_day: "Día",
+                badge_downloads: "+50 Mil Descargas",
+                badge_content: "Generadores • Mobs • Armas OP",
+                badge_loaders: "Fabric y Forge 1.21 – 26.3",
+                hero_title_1: "Mejora Tu Skyblock",
+                hero_title_2: "Con Generadores y Armas OP.",
+                hero_desc: "Skyblockop transforma el Skyblock clásico en una aventura llena de progresión—con generadores automáticos de minerales, jefes de isla personalizados, espadas elementales, picos 3x3 y mejoras de isla.",
+                cta_download: "Descargar Skyblockop",
+                cta_discord: "Unirse a Discord",
+                stat_downloads: "Descargas Totales",
+                stat_gens: "Generadores",
+                stat_mobs: "Mobs y Jefes",
+                stat_gear: "Espadas y Picos",
+                feat_eyebrow: "Mecánicas del Mod",
+                feat_title: "Diseñado para Progresión Infinita en Skyblock",
+                feat_note: "Funciona en mundos Skyblock Un Jugador y Multijugador.",
+                f1_title: "Generadores Inteligentes",
+                f1_desc: "Generadores mejorables de Cobblestone, Hierro, Diamante y Cristal del Vacío que producen minerales raros automáticamente.",
+                f2_title: "Mobs y Jefes Nuevos",
+                f2_desc: "Enfrenta Slimes Celestiales, Gólems del Vacío y Guardianes de Isla que sueltan fragmentos raros y núcleos de crafteo.",
+                f3_title: "Espadas y Picos OP",
+                f3_desc: "Craftea picos de área 3x3 con Auto-Fundición, Espadas de Rayo y Segadoras del Vacío con habilidades especiales.",
+                f4_title: "Misiones y Tienda de Isla",
+                f4_desc: "Completa misiones de progreso integradas, desbloquea islas flotantes bioma y canjea Sky Coins por planos únicos.",
+                dl_eyebrow: "Descargas Oficiales",
+                dl_title: "Elige tu Loader y Versión",
+                dl_subtitle: "Incluye mundo Skyblock preconfigurado, generadores, mobs nuevos y armas OP.",
+                filter_all: "Todas",
+                dl_btn: "Descargar .jar",
+                dl_latest: "Nueva",
+                dl_compat: "Generadores, Mobs y Armas OP",
+                faq_eyebrow: "Dudas y Respuestas",
+                faq_title: "Preguntas Frecuentes",
+                faq_subtitle: "Todo lo que necesitas saber sobre Skyblockop.",
+                faqs: [
+                    {
+                        q: "¿Skyblockop da lag si pongo muchos generadores automáticos?",
+                        a: "¡Para nada! Skyblockop agrupa la generación por ticks y apila los ítems automáticamente dentro de sus tolvas internas, manteniendo 20.0 TPS estables y altos FPS incluso en islas gigantes."
+                    },
+                    {
+                        q: "¿Cómo empiezo una partida en una isla de Skyblockop?",
+                        a: "Solo dale a 'Crear nuevo mundo' en Minecraft, entra a la pestaña Mundo y selecciona el tipo de mundo 'Skyblockop Island'. Aparecerás en una isla flotante con tu primer Generador y Libro de Misiones."
+                    },
+                    {
+                        q: "¿Qué espadas, picos y armaduras nuevas agrega el mod?",
+                        a: "Agrega más de 35 herramientas y armas nuevas, incluyendo Picos 3x3 con Auto-Smelt, Taladros Magnéticos, Espadas de Tormenta con rayos en cadena y Armaduras Aladas."
+                    },
+                    {
+                        q: "¿Cómo aparecen los mobs personalizados y jefes de isla?",
+                        a: "Los mobs como Slimes de Cristal y Acechadores del Vacío aparecen de forma natural en plataformas oscuras de tu isla, mientras que los jefes se invocan con Tótems crafteables."
+                    },
+                    {
+                        q: "¿Puedo jugar Skyblockop en servidor o con amigos?",
+                        a: "¡Sí! Incluye comandos para compartir isla en equipo (/island invite) y funciona perfectamente tanto en servidores Fabric/Forge como en partidas compartidas con amigos."
+                    }
+                ],
+                disc_badge: "Comunidad y Wiki en Discord",
+                disc_title: "Comparte Islas y Recetas de Crafteo",
+                disc_desc: "Únete al Discord oficial de Skyblockop para descubrir recetas secretas de generadores, drops de jefes, jugar con otros usuarios y enterarte de nuevas actualizaciones.",
+                disc_join_btn: "Abrir Discord",
+                footer_note: "No afiliado con Mojang ni Microsoft.",
+                modal_title: "Descargando Skyblockop",
+                modal_pkg: "Archivo del Mod",
+                modal_hint: "Mueve este archivo .jar a tu carpeta /mods de Minecraft y crea un mundo nuevo con el tipo de mundo Skyblockop.",
+                modal_done: "Cerrar"
             },
             pt: {
-                "nav.home": "Início",
-                "nav.features": "Recursos",
-                "nav.download": "Downloads",
-                "nav.community": "Comunidade",
-                "lang.select": "Idioma",
-                "hero.badge": "Exclusivo para Fabric Loader",
-                "hero.subtitle": "O mod utilitário definitivo para SkyBlock otimizado exclusivamente para Fabric. Automação avançada, calculadora de ganhos ao vivo e alto desempenho.",
-                "hero.downloadBtn": "Baixar Grátis",
-                "hero.discordBtn": "Entrar no Discord",
-                "stats.downloads": "Downloads",
-                "stats.fabric": "Fabric Exclusivo",
-                "stats.versions": "1.21.1 / 1.21.11 / 26.3",
-                "stats.boost": "FPS Melhorado",
-                "features.subtitle": "Ferramentas Épicas",
-                "features.title": "RECURSOS OP",
-                "f1.title": "Calculadora de Lucro OP",
-                "f1.desc": "Acompanhe seus lucros em tempo real vendendo nas lojas do seu servidor SkyBlock.",
-                "f2.title": "Suporte Exclusivo Fabric",
-                "f2.desc": "Desenvolvido do zero para aproveitar a velocidade da Fabric API.",
-                "f3.title": "Rastreador de Spawners",
-                "f3.desc": "Monitore a eficiência e o armazenamento dos seus sistemas automáticos.",
-                "f4.title": "HUD Tático Configurável",
-                "f4.desc": "Exiba moedas, coordenadas, FPS e estatísticas da ilha sem poluir a tela.",
-                "f5.title": "Alertas de Eventos",
-                "f5.desc": "Receba alertas sonoros e visuais sobre chefes e promoções no servidor.",
-                "f6.title": "Renderização Sem Lag",
-                "f6.desc": "Otimizações de desempenho para manter FPS alto em megabases.",
-                "downloads.subtitle": "Downloads Oficiais",
-                "downloads.title": "BAIXAR SKYBLOCK OP MOD",
-                "downloads.desc": "Exclusivo para Fabric Loader. Escolha sua versão do Minecraft:",
-                "dl.tag1": "VERSÃO 1.21.1",
-                "dl.tag2": "RECOMENDADO LTS",
-                "dl.tag3": "NOVA ATUALIZAÇÃO",
-                "dl.desc1": "Versão estável otimizada para servidores 1.21.1.",
-                "dl.desc2": "A versão mais testada e recomendada para SkyBlock.",
-                "dl.desc3": "Suporte completo adaptado para Minecraft 26.3.",
-                "dl.changelog": "Notas da Versão",
-                "community.badge": "COMUNIDADE OFICIAL",
-                "community.title": "TEM DÚVIDAS OU SUGESTÕES?",
-                "community.desc": "Junte-se a milhares de jogadores no Discord. Suporte rápido e novidades Fabric.",
-                "community.online": "Online",
-                "community.support": "Suporte Contínuo",
-                "footer.about": "Página oficial do SkyBlock OP Mod para Fabric (1.21.1, 1.21.11 e 26.3).",
-                "footer.nav": "Navegação",
-                "footer.resources": "Recursos"
+                nav_features: "Recursos",
+                nav_versions: "Versões",
+                nav_faq: "Perguntas",
+                nav_community: "Discord",
+                theme_night: "Noite",
+                theme_day: "Dia",
+                badge_downloads: "+50 Mil Downloads",
+                badge_content: "Geradores • Mobs • Armas OP",
+                badge_loaders: "Fabric e Forge 1.21 – 26.3",
+                hero_title_1: "Evolua Seu Skyblock",
+                hero_title_2: "Com Geradores e Itens OP.",
+                hero_desc: "O Skyblockop transforma o Skyblock clássico em uma aventura cheia de progressão—com geradores automáticos de minérios, chefes de ilha, espadas elementais, picaretas 3x3 e upgrades de ilha.",
+                cta_download: "Baixar Skyblockop",
+                cta_discord: "Entrar no Discord",
+                stat_downloads: "Downloads Totais",
+                stat_gens: "Geradores",
+                stat_mobs: "Mobs e Chefes",
+                stat_gear: "Espadas e Picaretas",
+                feat_eyebrow: "Mecânicas do Mod",
+                feat_title: "Feito para Progressão Infinita no Skyblock",
+                feat_note: "Funciona em mundos Skyblock Singleplayer e Multiplayer.",
+                f1_title: "Geradores Inteligentes",
+                f1_desc: "Geradores aprimoráveis de Pedregulho, Ferro, Diamante e Cristal do Vazio que produzem minérios raros automaticamente.",
+                f2_title: "Mobs e Chefes Novos",
+                f2_desc: "Enfrente Slimes Celestiais, Golens do Vazio e Guardiões da Ilha que dropam fragmentos raros e núcleos de criação.",
+                f3_title: "Espadas e Picaretas OP",
+                f3_desc: "Crie Picaretas 3x3 com Auto-Fornalha, Espadas Relâmpago e Ceifadoras do Vazio com habilidades especiais.",
+                f4_title: "Missões e Loja da Ilha",
+                f4_desc: "Complete missões integradas de Skyblock, desbloqueie ilhas flutuantes e troque Sky Coins por receitas raras.",
+                dl_eyebrow: "Downloads Oficiais",
+                dl_title: "Selecione seu Loader e Versão",
+                dl_subtitle: "Inclui mundo Skyblock integrado, geradores, novos mobs e armas OP.",
+                filter_all: "Todas",
+                dl_btn: "Baixar .jar",
+                dl_latest: "Recente",
+                dl_compat: "Geradores, Mobs e Itens OP",
+                faq_eyebrow: "Dúvidas e Respostas",
+                faq_title: "Perguntas Frequentes",
+                faq_subtitle: "Tudo o que você precisa saber sobre o Skyblockop.",
+                faqs: [
+                    {
+                        q: "O Skyblockop causa lag com vários geradores automáticos?",
+                        a: "Não! O Skyblockop agrupa a geração por ticks e empilha os itens automaticamente dentro dos funis internos, mantendo 20.0 TPS estáveis e FPS alto mesmo em ilhas grandes."
+                    },
+                    {
+                        q: "Como começo um mundo Skyblockop?",
+                        a: "Clique em 'Criar Novo Mundo' no Minecraft, vá até a aba Mundo e escolha o tipo 'Skyblockop Island'. Você nascerá em uma ilha flutuante com seu primeiro Gerador e Livro de Missões."
+                    },
+                    {
+                        q: "Quais espadas, picaretas e armaduras novas o mod adiciona?",
+                        a: "Adiciona mais de 35 ferramentas e armas customizadas, incluindo Picaretas 3x3 com Auto-Smelt, Brocas Magnéticas, Espadas da Tempestade e Armaduras Aladas."
+                    },
+                    {
+                        q: "Como surgem os novos mobs e chefes de ilha?",
+                        a: "Mobs como Slimes de Cristal surgem naturalmente em áreas escuras da ilha, enquanto chefes como o Guardião Celeste são invocados com Totens craftáveis."
+                    },
+                    {
+                        q: "Posso jogar Skyblockop em servidor multiplayer com amigos?",
+                        a: "Sim! Inclui comandos de ilha em equipe (/island invite) e funciona perfeitamente em servidores Fabric/Forge ou partidas compartilhadas."
+                    }
+                ],
+                disc_badge: "Comunidade e Wiki no Discord",
+                disc_title: "Compartilhe Ilhas e Receitas",
+                disc_desc: "Entre no Discord oficial do Skyblockop para descobrir receitas secretas de geradores, drops de chefes e novidades das próximas atualizações.",
+                disc_join_btn: "Abrir Discord",
+                footer_note: "Não afiliado à Mojang ou Microsoft.",
+                modal_title: "Baixando Skyblockop",
+                modal_pkg: "Pacote do Mod",
+                modal_hint: "Mova este arquivo .jar para a pasta /mods do seu Minecraft e crie um novo mundo com o tipo Skyblockop!",
+                modal_done: "Fechar"
             },
             zh: {
-                "nav.home": "首页",
-                "nav.features": "模组特色",
-                "nav.download": "下载专区",
-                "nav.community": "玩家社区",
-                "lang.select": "语言选择",
-                "hero.badge": "Fabric 加载器独占",
-                "hero.subtitle": "专为 Fabric 打造的终极空岛 OP 辅助模组！包含实时收益计算、生成器监视、战术 HUD，流畅无卡顿。",
-                "hero.downloadBtn": "免费下载",
-                "hero.discordBtn": "加入 Discord 社区",
-                "stats.downloads": "总下载量",
-                "stats.fabric": "Fabric 独占",
-                "stats.versions": "1.21.1 / 1.21.11 / 26.3",
-                "stats.boost": "帧率提升",
-                "features.subtitle": "史诗级工具",
-                "features.title": "OP 核心功能",
-                "f1.title": "OP 实时收益计算器",
-                "f1.desc": "自动跟踪在空岛商店出售物品的实时收益，精准统计每分钟与每小时收入。",
-                "f2.title": "Fabric 专属优化",
-                "f2.desc": "基于 Fabric API 深度开发，兼具极速与轻量化。",
-                "f3.title": "刷怪笼与生成器监视器",
-                "f3.desc": "实时查看刷怪笼效率、冷却倒计时与自动化设施容量。",
-                "f4.title": "自定义战术 HUD",
-                "f4.desc": "清爽显示金币、岛屿等级、FPS 与坐标，不遮挡画面。",
-                "f5.title": "特殊活动预警",
-                "f5.desc": " Boss 刷新、拍卖或限时特惠活动开启时获得音效与视觉提醒。",
-                "f6.title": "零卡顿渲染系统",
-                "f6.desc": "针对超大空岛与密集农场进行专项渲染优化，保持高帧率。",
-                "downloads.subtitle": "官方下载",
-                "downloads.title": "下载 SKYBLOCK OP 模组",
-                "downloads.desc": "仅支持 Fabric Loader。请选择对应的 Minecraft 版本：",
-                "dl.tag1": "1.21.1 版本",
-                "dl.tag2": "推荐 LTS 版本",
-                "dl.tag3": "全新更新版",
-                "dl.desc1": "针对 1.21.1 多人服务器优化的超稳定构建版。",
-                "dl.desc2": "测试最充分、最受推荐的空岛核心版本。",
-                "dl.desc3": "全面适配 Minecraft 26.3 最新版本的构建版。",
-                "dl.changelog": "版本更新说明",
-                "community.badge": "官方社区",
-                "community.title": "需要帮助或有新想法？",
-                "community.desc": "加入我们的官方 Discord 社区，与数千位玩家交流并获取 Fabric 更新动态。",
-                "community.online": "在线玩家",
-                "community.support": "全天候支持",
-                "footer.about": "SkyBlock OP 模组官方网站 (Fabric 1.21.1, 1.21.11 & 26.3)。",
-                "footer.nav": "导航",
-                "footer.resources": "资源"
+                nav_features: "核心玩法",
+                nav_versions: "版本下载",
+                nav_faq: "常见问题",
+                nav_community: "Discord 社区",
+                theme_night: "夜间",
+                theme_day: "日间",
+                badge_downloads: "+50,000 次下载",
+                badge_content: "刷石机生成器 • 自定义怪物 • 神级装备",
+                badge_loaders: "Fabric & Forge 1.21 – 26.3",
+                hero_title_1: "全面升级你的空岛生存",
+                hero_title_2: "解锁刷矿机与神级武器。",
+                hero_desc: "Skyblockop 为经典空岛注入丰富的 RPG 养成玩法——包含全自动多级矿物生成器、空岛专属 Boss、元素神剑、3x3 范围镐以及空岛任务系统。",
+                cta_download: "下载 Skyblockop",
+                cta_discord: "加入 Discord 社区",
+                stat_downloads: "累计下载量",
+                stat_gens: "矿物生成器",
+                stat_mobs: "空岛 Boss",
+                stat_gear: "神剑与范围镐",
+                feat_eyebrow: "模组特色功能",
+                feat_title: "专为无限空岛进阶打造",
+                feat_note: "支持单人空岛与多人联机服务器。",
+                f1_title: "智能矿物生成器",
+                f1_desc: "可升级圆石、铁矿、钻石及虚空水晶生成器，随空岛等级自动产出稀有矿石。",
+                f2_title: "自定义怪物与 Boss",
+                f2_desc: "挑战天空史莱姆、虚空傀儡与空岛守护者，掉落稀有碎片与合成核心。",
+                f3_title: "神级剑与 3x3 范围镐",
+                f3_desc: "打造自带自动熔炼的 3x3 采矿镐、雷霆之刃与虚空收割者，拥有专属主动技能。",
+                f4_title: "空岛任务与商店",
+                f4_desc: "完成内置空岛里程碑任务，解锁悬浮生态空岛，并使用天空币兑换稀有蓝图。",
+                dl_eyebrow: "官方下载中心",
+                dl_title: "选择模组加载器与游戏版本",
+                dl_subtitle: "内置专属空岛世界预设、多级生成器、自定义怪物与神级武器。",
+                filter_all: "全部版本",
+                dl_btn: "下载 .jar",
+                dl_latest: "最新",
+                dl_compat: "生成器、怪物与神级装备",
+                faq_eyebrow: "常见疑问解答",
+                faq_title: "常见问题 (FAQ)",
+                faq_subtitle: "关于 Skyblockop 你需要了解的一切。",
+                faqs: [
+                    {
+                        q: "放置大量自动生成器会导致游戏卡顿或掉帧吗？",
+                        a: "不会！Skyblockop 采用分刻批处理生成和内置漏斗自动堆叠技术，即使在大型空岛上也能保持稳定的 20.0 TPS 和高帧率。"
+                    },
+                    {
+                        q: "如何创建 Skyblockop 空岛世界？",
+                        a: "在 Minecraft 中点击“创建新世界”，切换到“世界”选项卡并选择“Skyblockop Island”预设，即可出生在带有初始生成器和任务书的悬浮空岛上。"
+                    },
+                    {
+                        q: "模组新增了哪些武器、镐子和护甲？",
+                        a: "新增超过 35 种自定义工具与武器，包括自带自动熔炼的 3x3 采矿镐、磁力钻头、连锁闪电风暴之剑以及天际飞翼护甲。"
+                    },
+                    {
+                        q: "自定义怪物和空岛 Boss 如何生成？",
+                        a: "水晶史莱姆等怪物会在空岛暗处自然生成，而天空守望者等强力 Boss 可通过生成器掉落物合成的 Boss 图腾召唤。"
+                    },
+                    {
+                        q: "可以和好友在多人服务器中一起游玩吗？",
+                        a: "完全可以！模组内置组队空岛指令（/island invite），完美兼容 Fabric/Forge 独立服务器及联机模组。"
+                    }
+                ],
+                disc_badge: "Discord 官方社区与百科",
+                disc_title: "分享空岛建筑与隐藏合成配方",
+                disc_desc: "加入 Skyblockop 官方 Discord 服务器，探索隐藏生成器配方、查看 Boss 掉落表并获取最新更新通知。",
+                disc_join_btn: "打开 Discord",
+                footer_note: "非 Mojang 或 Microsoft 官方产品。",
+                modal_title: "正在下载 Skyblockop",
+                modal_pkg: "模组文件包",
+                modal_hint: "请将此 .jar 文件放入 Minecraft 的 /mods 文件夹，并使用 Skyblockop 世界类型创建新存档！",
+                modal_done: "关闭"
             }
         };
 
-        let currentLang = 'es';
+        let currentLang = 'en';
+        let currentVersionFilter = 'ALL';
+        let openFaqIndex = 0;
 
-        function toggleLangDropdown() {
-            const dropdown = document.getElementById('lang-dropdown');
-            dropdown.classList.toggle('hidden');
+        // Day / Night Theme Switcher
+        function updateThemeLabel() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const labelEl = document.getElementById('themeToggleLabel');
+            if (labelEl && i18n[currentLang]) {
+                labelEl.textContent = isDark ? i18n[currentLang].theme_day : i18n[currentLang].theme_night;
+            }
         }
 
-        window.addEventListener('click', (e) => {
-            const langBtn = document.getElementById('lang-btn');
-            const dropdown = document.getElementById('lang-dropdown');
-            if (langBtn && dropdown && !langBtn.contains(e.target) && !dropdown.contains(e.target)) {
-                dropdown.classList.add('hidden');
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            try {
+                localStorage.setItem('skyblockop-theme', isDark ? 'dark' : 'light');
+            } catch (e) {}
+            updateThemeLabel();
+        }
+
+        function initTheme() {
+            let saved = null;
+            try { saved = localStorage.getItem('skyblockop-theme'); } catch (e) {}
+            if (saved === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
             }
-        });
+            updateThemeLabel();
+        }
 
+        // Language Switcher
         function setLanguage(lang) {
-            if (!translations[lang]) return;
+            if (!i18n[lang]) return;
             currentLang = lang;
+            document.documentElement.lang = lang;
+            document.getElementById('currentLangLabel').textContent = lang.toUpperCase();
 
-            const labels = {
-                es: 'Español (ES)',
-                en: 'English (EN)',
-                pt: 'Português (PT)',
-                zh: '中文 (ZH)'
-            };
-
-            document.getElementById('current-lang-label').textContent = labels[lang];
-
-            document.querySelectorAll('[data-i18n]').forEach(element => {
-                const key = element.getAttribute('data-i18n');
-                if (translations[lang][key]) {
-                    element.textContent = translations[lang][key];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang][key]) {
+                    el.textContent = i18n[lang][key];
                 }
             });
 
-            document.getElementById('lang-dropdown').classList.add('hidden');
-            showToast(`Idioma cambiado a ${labels[lang]}`, 'info');
+            updateThemeLabel();
+            renderLoaderMatrix();
+            renderFaqList();
+            document.getElementById('langMenu').classList.add('hidden');
         }
 
-        // Menú Móvil
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+        const langMenuBtn = document.getElementById('langMenuBtn');
+        const langMenu = document.getElementById('langMenu');
+        langMenuBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langMenu.classList.toggle('hidden');
         });
+        document.addEventListener('click', () => langMenu.classList.add('hidden'));
 
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
+        // Render Side-by-Side Fabric & Forge Matrix
+        function renderLoaderMatrix() {
+            const grid = document.getElementById('loaderMatrixGrid');
+            const t = i18n[currentLang];
+            const loaders = [
+                { name: 'Fabric', dot: 'bg-amber-400', badge: 'bg-amber-50 dark:bg-amber-500/15 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-500/30' },
+                { name: 'Forge', dot: 'bg-indigo-500 dark:bg-indigo-400', badge: 'bg-indigo-50 dark:bg-indigo-500/15 text-indigo-800 dark:text-indigo-300 border-indigo-200 dark:border-indigo-500/30' }
+            ];
+
+            grid.innerHTML = loaders.map(loaderObj => {
+                const items = releasesData.filter(r =>
+                    r.loader === loaderObj.name &&
+                    (currentVersionFilter === 'ALL' || r.mc === currentVersionFilter)
+                );
+
+                return `
+                <div class="rounded-3xl bg-celeste-50/90 dark:bg-slate-900/70 border border-celeste-200/90 dark:border-celeste-500/20 p-5 sm:p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between pb-4 mb-4 border-b border-celeste-200/70 dark:border-celeste-500/20">
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-3 h-3 rounded-full ${loaderObj.dot}"></span>
+                                <h3 class="text-lg font-extrabold text-celeste-900 dark:text-white">${loaderObj.name}</h3>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-lg border text-[11px] font-bold ${loaderObj.badge}">
+                                ${items.length} ${items.length === 1 ? 'Build' : 'Builds'}
+                            </span>
+                        </div>
+
+                        <div class="space-y-3">
+                            ${items.map(item => `
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-2xl bg-white dark:bg-slate-800/90 border border-celeste-200/80 dark:border-celeste-500/20 hover:border-celeste-400 dark:hover:border-celeste-400/60 shadow-sm transition-all">
+                                    <div>
+                                        <div class="flex items-center gap-2">
+                                            <span class="font-extrabold text-sm sm:text-base text-celeste-900 dark:text-white">Minecraft ${item.mc}</span>
+                                            ${item.latest ? `<span class="px-2 py-0.5 rounded-md bg-celeste-500 text-white dark:text-slate-950 text-[10px] font-extrabold">${t.dl_latest}</span>` : ''}
+                                        </div>
+                                        <div class="text-[11px] font-mono text-slate-500 dark:text-slate-400 mt-0.5">
+                                            ${item.file} • ${item.size}
+                                        </div>
+                                    </div>
+
+                                    <a href="${item.url}" download="${item.file}" onclick="openDownloadModal('${item.id}')"
+                                        class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-celeste-600 hover:bg-celeste-700 dark:bg-celeste-500 dark:hover:bg-celeste-400 text-white dark:text-slate-950 font-bold text-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer shrink-0">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                        </svg>
+                                        <span>${t.dl_btn}</span>
+                                    </a>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function setVersionFilter(ver) {
+            currentVersionFilter = ver;
+            document.querySelectorAll('.vtab-btn').forEach(btn => {
+                btn.classList.remove('bg-celeste-600', 'dark:bg-celeste-500', 'text-white', 'dark:text-slate-950', 'shadow-sm');
+                btn.classList.add('text-celeste-800', 'dark:text-celeste-200');
             });
-        });
-
-        // Descarga Simulada
-        function triggerDownload(fileName) {
-            showToast(`Iniciando descarga Fabric: ${fileName}`, 'success');
-            
-            const element = document.createElement('a');
-            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(`SkyBlock OP Mod (Fabric Exclusivo) - Descarga Simulada (${fileName})`));
-            element.setAttribute('download', fileName);
-            element.style.display = 'none';
-            document.body.appendChild(element);
-            element.click();
-            document.body.removeChild(element);
-        }
-
-        // Sistema Notificaciones Toast
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            
-            const bgColor = type === 'success' ? 'bg-amber-950/90 border-brand-gold text-brand-gold' : 'bg-slate-900/90 border-brand-cyan text-brand-cyan';
-            const icon = type === 'success' ? 'fa-circle-check' : 'fa-circle-info';
-
-            toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl border ${bgColor} backdrop-blur-md shadow-xl text-sm font-medium transition-all duration-300 transform translate-y-2 opacity-0`;
-            toast.innerHTML = `
-                <i class="fa-solid ${icon} text-lg"></i>
-                <span>${message}</span>
-            `;
-
-            container.appendChild(toast);
-
-            setTimeout(() => {
-                toast.classList.remove('translate-y-2', 'opacity-0');
-            }, 10);
-
-            setTimeout(() => {
-                toast.classList.add('opacity-0', 'translate-y-2');
-                setTimeout(() => {
-                    toast.remove();
-                }, 300);
-            }, 3500);
-        }
-
-        // Modal Changlog
-        function openChangelog(version, text) {
-            document.getElementById('modal-title').textContent = `Notas de la versión ${version}`;
-            document.getElementById('modal-body').textContent = text;
-            document.getElementById('changelog-modal').classList.remove('hidden');
-        }
-
-        function closeChangelog() {
-            document.getElementById('changelog-modal').classList.add('hidden');
-        }
-
-        document.getElementById('changelog-modal').addEventListener('click', (e) => {
-            if (e.target.id === 'changelog-modal') {
-                closeChangelog();
+            const active = document.getElementById(`vtab-${ver}`);
+            if (active) {
+                active.classList.remove('text-celeste-800', 'dark:text-celeste-200');
+                active.classList.add('bg-celeste-600', 'dark:bg-celeste-500', 'text-white', 'dark:text-slate-950', 'shadow-sm');
             }
+            renderLoaderMatrix();
+        }
+
+        // Render Interactive Translated FAQ Accordion
+        function renderFaqList() {
+            const container = document.getElementById('faqAccordionList');
+            const faqItems = i18n[currentLang].faqs || [];
+
+            container.innerHTML = faqItems.map((item, idx) => {
+                const isOpen = openFaqIndex === idx;
+                return `
+                <div class="rounded-2xl bg-celeste-50/90 dark:bg-slate-900/75 border ${isOpen ? 'border-celeste-400 dark:border-celeste-400/60' : 'border-celeste-200/80 dark:border-celeste-500/20'} overflow-hidden transition-all">
+                    <button type="button" onclick="toggleFaq(${idx})" aria-expanded="${isOpen}"
+                        class="w-full px-5 py-4 text-left flex items-center justify-between gap-4 cursor-pointer hover:bg-white/70 dark:hover:bg-slate-800/60 transition-colors">
+                        <span class="font-extrabold text-sm sm:text-base text-celeste-900 dark:text-white">${item.q}</span>
+                        <span class="w-7 h-7 rounded-xl bg-celeste-200/70 dark:bg-slate-800 text-celeste-800 dark:text-celeste-300 flex items-center justify-center shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180 bg-celeste-600 dark:bg-celeste-500 text-white dark:text-slate-950' : ''}">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </span>
+                    </button>
+                    <div class="${isOpen ? 'block' : 'hidden'} px-5 pb-4 pt-1 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed border-t border-celeste-200/50 dark:border-celeste-500/15">
+                        ${item.a}
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function toggleFaq(idx) {
+            openFaqIndex = openFaqIndex === idx ? -1 : idx;
+            renderFaqList();
+        }
+
+        // Download Modal
+        function openDownloadModal(id) {
+            const item = releasesData.find(r => r.id === id);
+            if (!item) return;
+            document.getElementById('modalFileName').textContent = item.file;
+            document.getElementById('modalMeta').textContent = `${item.loader} • Minecraft ${item.mc} • ${i18n[currentLang].dl_compat}`;
+            document.getElementById('downloadModal').classList.remove('hidden');
+        }
+
+        function closeDownloadModal() {
+            document.getElementById('downloadModal').classList.add('hidden');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            setLanguage('en');
         });
     </script>
 </body>
